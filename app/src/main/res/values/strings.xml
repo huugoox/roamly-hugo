@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Navigation</string>
+    <string name="default_user">p</string>
+    <string name="default_pass">1</string>
+</resources>
