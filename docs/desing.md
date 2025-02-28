@@ -26,7 +26,9 @@ classDiagram
         +void updatePreferences()  
     }  
     
-    class Authentication {  
+    class Authentication {
+        +String email
+        +String password 
         +void login(email, password)  
         +void logout()  
         +void resetPassword(email)  
