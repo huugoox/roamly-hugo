@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         var isChecking = true
         lifecycleScope.launch {
-            delay(3000L)
+            delay(1500L)
             isChecking = false
         }
         installSplashScreen().apply {

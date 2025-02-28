@@ -1,7 +1,10 @@
 package com.example.navigation.ui.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
@@ -12,9 +15,12 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +34,7 @@ fun HomeScreenScaffold2(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Home Screen") },
+                title = { Text("Roamly Home") },
                 actions = {
                     Box {
                         IconButton(onClick = { showSettingsMenu = !showSettingsMenu }) {
@@ -39,7 +45,7 @@ fun HomeScreenScaffold2(navController: NavController) {
                             onDismissRequest = { showSettingsMenu = false }
                         ) {
                             DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Info, contentDescription = "About Icon") },
+                                leadingIcon = { Icon(Icons.Filled.Info, contentDescription = "About") },
                                 text = { Text("About") },
                                 onClick = {
                                     showSettingsMenu = false
@@ -55,7 +61,7 @@ fun HomeScreenScaffold2(navController: NavController) {
                                 }
                             )
                             DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Profile Icon") },
+                                leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Profile") },
                                 text = { Text("Profile") },
                                 onClick = {
                                     showSettingsMenu = false
@@ -63,11 +69,19 @@ fun HomeScreenScaffold2(navController: NavController) {
                                 }
                             )
                             DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = "Settings Icon") },
+                                leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = "Settings") },
                                 text = { Text("Settings") },
                                 onClick = {
                                     showSettingsMenu = false
                                     navController.navigate("settings")
+                                }
+                            )
+                            DropdownMenuItem(
+                                leadingIcon = { Icon(Icons.Filled.Star, contentDescription = "Terms and Conditions") },
+                                text = { Text("Terms & Conditions") },
+                                onClick = {
+                                    showSettingsMenu = false
+                                    navController.navigate("termsAndConditions")
                                 }
                             )
                         }
@@ -80,6 +94,7 @@ fun HomeScreenScaffold2(navController: NavController) {
             BottomNavigationBar(
                 selectedIndex = selectedIndex,
                 onItemSelected = {
+                    selectedIndex = it
                 }
             )
         },
@@ -87,13 +102,21 @@ fun HomeScreenScaffold2(navController: NavController) {
             FloatingActionButton(
                 onClick = { /* Acción del FAB */ }
             ) {
-                Icon(Icons.Filled.Settings, contentDescription = "FAB Icon")
+                Icon(Icons.Filled.Settings, contentDescription = "Fast Configuration")
             }
         },
         content = { padding ->
             // Contenido de la pantalla
-            Column(modifier = Modifier.padding(padding)) {
-                // Aquí puedes agregar más contenido
+            Column(
+                modifier = Modifier.padding(padding)
+                    .fillMaxSize()
+                    .background(Color.White)
+                    .padding(padding),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Welcome to Roamly", style = MaterialTheme.typography.headlineSmall, color = Color.Black)
+                Text(text = "Explore and plan your travels easily", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
         }
     )
@@ -106,8 +129,8 @@ fun BottomNavigationBar(
 ) {
     NavigationBar {
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Menu, contentDescription = "Menú") },
-            label = { Text("Menú") },
+            icon = { Icon(Icons.Filled.Menu, contentDescription = "Menu") },
+            label = { Text("Menu") },
             selected = selectedIndex == 0,
             onClick = { onItemSelected(0) }
         )
@@ -118,8 +141,8 @@ fun BottomNavigationBar(
             onClick = { onItemSelected(1) }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Explore, contentDescription = "Explorar") },
-            label = { Text("Explorar") },
+            icon = { Icon(Icons.Filled.Explore, contentDescription = "Explore") },
+            label = { Text("Explore") },
             selected = selectedIndex == 2,
             onClick = { onItemSelected(2) }
         )

@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">Navigation</string>
     <string name="default_user">p</string>
     <string name="default_pass">1</string>
+    <string name="app_name" translatable="false">Roamly</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="terms_conditions">Términos y Condiciones</string>
+
 </resources>
