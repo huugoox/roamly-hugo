@@ -65,7 +65,8 @@ classDiagram
         +void generateRecommendations()  
     }  
     
-    class Map {  
+    class Map {
+        +String location
         +void showLocation()  
         +void getNearbyPlaces()  
     }  
