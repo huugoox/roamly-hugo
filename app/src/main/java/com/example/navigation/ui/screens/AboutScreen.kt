@@ -32,7 +32,7 @@ fun AboutScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.roamly2), // Usa tu logo aquí
+            painter = painterResource(id = R.drawable.logoroamly2), // Usa tu logo aquí
             contentDescription = "Roamly Logo",
             modifier = Modifier.size(120.dp)
         )
