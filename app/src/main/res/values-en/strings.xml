@@ -1,10 +1,14 @@
 <resources>
     <string name="default_user">p</string>
     <string name="default_pass">1</string>
+    <string name="default_email">polmarsoluni@gmail.com</string>
+
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="terms_conditions">Terms &amp; Conditions</string>
+    <string name="welcome_back"> Welcome back!</string>
+
 
 </resources>
