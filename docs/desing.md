@@ -25,6 +25,14 @@ classDiagram
         +uploadPhoto(url, description)  
     }  
     
+    class Authentication {
+        +String email
+        +String password
+        +void login(email, password)  
+        +void logout()  
+        +void resetPassword(email)  
+    }
+    
     class Preferences {  
         +String id  
         +Boolean notificationsEnabled  
@@ -34,13 +42,7 @@ classDiagram
         +void getPreferences() 
     }  
     
-    class Authentication {
-        +String email
-        +String password
-        +void login(email, password)  
-        +void logout()  
-        +void resetPassword(email)  
-    }  
+  
     
     class Trip {  
         +String id  
