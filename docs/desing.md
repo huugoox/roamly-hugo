@@ -61,7 +61,7 @@ classDiagram
         +void updateItemDetails()  
     }  
     
-    class Image {  
+    class Photo {  
         +String id  
         +String url  
         +String description  
@@ -94,4 +94,6 @@ classDiagram
     Trip "1" -- "*" AIRecommendations : gets  
     Map ..> Trip : shows location of
 ```
+
+
 
