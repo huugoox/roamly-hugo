@@ -16,14 +16,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders["MAPS_API_KEY"] = providers.gradleProperty("MAPS_API_KEY").get()
+        manifestPlaceholders["MAPS_API_KEY"] =
+            providers.gradleProperty("MAPS_API_KEY").orElse(System.getenv("MAPS_API_KEY") ?: "")
 
     }
 
     buildTypes {
         debug {
             isMinifyEnabled = false
-            manifestPlaceholders["MAPS_API_KEY"] = providers.gradleProperty("MAPS_API_KEY").get()
+            manifestPlaceholders["MAPS_API_KEY"] =
+                providers.gradleProperty("MAPS_API_KEY").orElse(System.getenv("MAPS_API_KEY") ?: "")
         }
         release {
             isMinifyEnabled = false
