@@ -15,7 +15,8 @@ classDiagram
         +String phoneNumber  
         +void register()  
         +void login(email, password)  
-        +void logout()  
+        +void logout()
+        +uploadPhoto(url, description)  
     }  
     
     class Preferences {  
@@ -23,12 +24,11 @@ classDiagram
         +Boolean notificationsEnabled  
         +String preferredLanguage  
         +String theme  
-        +void updatePreferences()  
+        +void updatePreferences()
+        +void getPreferences() 
     }  
     
     class Authentication {
-        +String email
-        +String password 
         +void login(email, password)  
         +void logout()  
         +void resetPassword(email)  
@@ -41,7 +41,8 @@ classDiagram
         +Date endDate  
         +Double budget  
         +void addItineraryItem()  
-        +void removeItineraryItem()  
+        +void removeItineraryItem()
+        +void updateTripDetails()   
     }  
     
     class ItineraryItem {  
@@ -56,7 +57,7 @@ classDiagram
         +String id  
         +String url  
         +String description  
-        +void uploadImage()  
+        +void uploadPhoto()  
     }  
     
     class AIRecommendations {  
@@ -64,7 +65,8 @@ classDiagram
         +String tripId  
         +String suggestedActivity  
         +Double rating  
-        +void generateRecommendations()  
+        +void generateRecommendations()
+        +void rateRecommendation(Double rating)  
     }  
     
     class Map {
@@ -74,9 +76,12 @@ classDiagram
     }  
 
     User "1" -- "1" Preferences : has  
-    User "1" -- "1" Authentication : manages  
+    User "1" ..> Authentication : uses  
     User "1" -- "*" Trip : owns  
+    User "1" -- "*" Photo : uploads  
+    User "1" -- "*" AIRecommendations : views  
+
     Trip "1" -- "*" ItineraryItem : contains  
-    Trip "1" -- "*" Image : stores  
+    Trip "1" -- "*" Photo : stores  
     Trip "1" -- "*" AIRecommendations : gets  
-    Trip "1" -- "1" Map : shows locations  
+    Map ..> Trip : shows location of 
