@@ -96,29 +96,49 @@ classDiagram
     Map ..> Trip : shows location of
 ```
 
-A nivel de arquitectura hemos tomado las siguientes decisiones:
+## **Decisiones Arquitectónicas**
 
-    - Hemos dividido nuestra barra inferior en tres botones principales.
+Para el diseño de la aplicación, hemos tomado diversas decisiones arquitectónicas con el objetivo de ofrecer una experiencia fluida e intuitiva al usuario.
 
-    1. Explorar:
-        Hemos considerado importante para una app de planificación de viajes mostrar en primer
-        lugar el mapa que situa al usuario en su posición actual y en fases más avanzadas del 
-        desarrollo del proyecto que muestre las ubicaciones de sus viajes anteriores y sus viajes
-        futuros (diferenciados por una leyenda de colores).
-        Con esta decisión queremos incentivar a los usuarios a viajar y a completar el mapa 
-        como si de un mapa físico colgado en la pared se tratara.
+### **📌 Estructura de la Barra de Navegación Inferior**
 
-    2. Search: 
-        Queremos que el usuario este conectado con otros viajeros y pueda interactuar con 
-        ellos asimismo pudiendo visualizar los viajes realizados por otros usuarios y
-        mediante el número de teléfono poder contactar.
-        A parte, también podrá buscar nuevos destinos y añadirlos en su mapa.
+Hemos dividido la barra inferior en **tres secciones principales**, cada una con un propósito específico dentro de la planificación y exploración de viajes.
 
-    3. Profile: 
-        Cada usuario debe tener fácil acceso a su perfil en el cual se encuentran diferentes
-        informaciones como sus viajes anteriores, su lista de deseos...
-        En esta pantalla el usuario podrá personalizar su perfil (nombre de usuario, correo y 
-        foto de perfil en un futuro) y configurar la aplicación a su gusto (idioma, tema y notificaciones) 
-        y hacer consultas sobre la app.
+### **1️⃣ Explorar**
+📍 **Funcionalidad actual**:
+- Muestra un **mapa interactivo** que posiciona al usuario en su ubicación actual.
 
+🌍 **Futuras implementaciones**:
+- Visualización de **viajes anteriores** y **próximos viajes**, diferenciados mediante una leyenda de colores.
+- Incentivar a los usuarios a viajar al **completar su propio mapa**, como si fuera un **mapa físico colgado en la pared**.
 
+---
+
+### **2️⃣ Buscar**
+🔍 **Objetivo**: Conectar a los usuarios con otros viajeros y facilitar la exploración de destinos.
+
+💬 **Características principales**:
+- **Interacción con otros usuarios**, permitiendo visualizar los viajes que han realizado.
+- Contacto a través del **número de teléfono** para intercambiar experiencias y recomendaciones.
+- Posibilidad de **buscar nuevos destinos** y agregarlos a su mapa personal.
+
+---
+
+### **3️⃣ Perfil**
+👤 **Acceso rápido y personalización**
+
+📌 **Funciones actuales**:
+- Visualización de **viajes anteriores** y **lista de deseos**.
+
+⚙️ **Configuraciones disponibles**:
+- Personalización del perfil (**nombre de usuario, correo y foto de perfil en el futuro**).
+- Ajustes de la aplicación:
+    - **Idioma** 🌎
+    - **Tema** 🎨
+    - **Notificaciones** 🔔
+- Sección de **consultas sobre la app** y su funcionamiento.
+
+---
+
+### **🎯 Conclusión**
+Con esta estructura, buscamos que la aplicación sea intuitiva, inspiradora y funcional, permitiendo que los usuarios **descubran nuevos destinos, se conecten con otros viajeros y personalicen su experiencia**. 🚀🌍  
