@@ -84,4 +84,5 @@ classDiagram
     Trip "1" -- "*" ItineraryItem : contains  
     Trip "1" -- "*" Photo : stores  
     Trip "1" -- "*" AIRecommendations : gets  
-    Map ..> Trip : shows location of 
+    Map ..> Trip : shows location of
+```
