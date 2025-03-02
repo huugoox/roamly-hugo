@@ -4,6 +4,7 @@ import  com.example.navigation.data.TripRepository
 import com.example.navigation.models.Trip
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,36 +34,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 enum class PlanningMode {
-    EXPLORE, SEARCH, FAVORITES, COMPLETED
+    EXPLORE, SEARCH, PROFILE
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenScaffold2(navController: NavController) {
-    var selectedMode by remember { mutableStateOf(PlanningMode.EXPLORE) }
+    var selectedMode by remember { mutableStateOf(PlanningMode.PROFILE) }
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Roamly", color = Color.Black) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White
-                )
-            )
-        },
         bottomBar = {
             BottomNavigationBar(selectedMode) { selectedMode = it }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navController.navigate("create_trip") },
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(Icons.Filled.Add, contentDescription = "Create Trip")
-            }
         }
     ) { padding ->
         Column(
@@ -74,8 +60,8 @@ fun HomeScreenScaffold2(navController: NavController) {
             when (selectedMode) {
                 PlanningMode.EXPLORE -> GlobeScreen()
                 PlanningMode.SEARCH -> SearchScreen()
-                PlanningMode.FAVORITES -> FavoriteTripsScreen()
-                PlanningMode.COMPLETED -> CompletedTripsScreen()
+                PlanningMode.PROFILE -> ProfileScreen(navController)
+
             }
         }
     }
@@ -83,7 +69,12 @@ fun HomeScreenScaffold2(navController: NavController) {
 
 @Composable
 fun BottomNavigationBar(selectedMode: PlanningMode, onModeSelected: (PlanningMode) -> Unit) {
-    NavigationBar (containerColor = Color.White){
+    NavigationBar (containerColor = Color.White,
+        tonalElevation = 0.dp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, Color(0xFFE0E0E0), RectangleShape)
+        ){
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Explore, contentDescription = "Explore", tint = Color.Black) },
             label = { Text("Explore", color = Color.Black) },
@@ -103,19 +94,10 @@ fun BottomNavigationBar(selectedMode: PlanningMode, onModeSelected: (PlanningMod
             )
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = "Favorites", tint = Color.Black) },
-            label = { Text("Favorites", color = Color.Black) },
-            selected = selectedMode == PlanningMode.FAVORITES,
-            onClick = { onModeSelected(PlanningMode.FAVORITES) },
-            colors = NavigationBarItemDefaults.colors(
-                indicatorColor = Color.LightGray.copy(alpha = 0.2f)
-            )
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.CheckCircle, contentDescription = "Completed", tint = Color.Black) },
-            label = { Text("Completed", color = Color.Black) },
-            selected = selectedMode == PlanningMode.COMPLETED,
-            onClick = { onModeSelected(PlanningMode.COMPLETED) },
+            icon = { Icon(Icons.Filled.Person, contentDescription = "Profile", tint = Color.Black) },
+            label = { Text("Profile", color = Color.Black) },
+            selected = selectedMode == PlanningMode.PROFILE,
+            onClick = { onModeSelected(PlanningMode.PROFILE) },
             colors = NavigationBarItemDefaults.colors(
                 indicatorColor = Color.LightGray.copy(alpha = 0.2f)
             )

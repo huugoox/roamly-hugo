@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.navigation.R
 import com.example.navigation.data.TripRepository
 import com.example.navigation.models.Trip
+import com.example.navigation.ui.components.TripCard
 
 @Composable
 fun FavoriteTripsScreen() {
@@ -33,22 +35,13 @@ fun FavoriteTripsScreen() {
             .background(Color(0xFFF8F9FA))
             .padding(16.dp)
     ) {
-        Text(
-            text = "Your Favorite Trips ❤️",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
         if (favoriteTrips.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No favorite trips yet!", fontSize = 18.sp, color = Color.Gray)
-            }
+            EmptyMessage("No tienes viajes favoritos aún.")
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(favoriteTrips.size) { index ->
-                    TripCard(trip = favoriteTrips[index])
+                items(favoriteTrips) { trip ->
+                    FavoriteTripCard(trip)
+                    Divider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.padding(vertical = 6.dp))
                 }
             }
         }
@@ -56,40 +49,38 @@ fun FavoriteTripsScreen() {
 }
 
 @Composable
-fun TripCard(trip: Trip) {
+fun FavoriteTripCard(trip: Trip) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .clickable { /* @ToDo*/ },
+            .padding(vertical = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 6.dp)
     ) {
         Column {
             Image(
-                painter = painterResource(R.drawable.reshot_icon_spotify_ge2jyxascz),
+                painter = painterResource(R.drawable.ic_launcher),
                 contentDescription = trip.destination,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
-                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+                    .height(160.dp)
+                    .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Detalles del viaje
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = trip.destination, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(text = trip.destination, fontWeight = FontWeight.Bold, color = Color.Black)
+                Text(text = "${trip.startDate} - ${trip.endDate}", color = Color.Gray)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "${trip.startDate} - ${trip.endDate}", fontSize = 14.sp, color = Color.Gray)
-                Spacer(modifier = Modifier.height(4.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.Favorite, contentDescription = "Favorite", tint = Color.Red)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "Added to favorites", fontSize = 14.sp, color = Color(0xFFE91E63))
-                }
+                Icon(Icons.Filled.Favorite, contentDescription = "Favorite", tint = Color.Red)
             }
         }
+    }
+}
+
+@Composable
+fun EmptyMessage(message: String) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(message, style = MaterialTheme.typography.bodyLarge, color = Color.Gray)
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,35 +21,33 @@ fun TermsAndConditionsScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Terms & Conditions") },
+                title = { Text("Terms & Conditions", color = Color.Black) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.Black)
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
             )
-        },
-        content = { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
-                    .padding(padding)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "By using this application, you agree to the following terms and conditions...",
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Justify,
-                    color = Color.Black
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(onClick = { navController.popBackStack() }) {
-                    Text("Accept")
-                }
-            }
         }
-    )
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(20.dp)
+        ) {
+            Text("Terms & Conditions", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+            Text(
+                "By using this app, you agree to our terms and conditions. Please review them carefully.",
+                fontSize = 14.sp, color = Color.Black, modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(
+                "1. You must comply with all applicable laws.\n" +
+                        "2. We are not responsible for any damages resulting from app usage.\n" +
+                        "3. We may update these terms at any time.",
+                fontSize = 14.sp, color = Color.Gray, modifier = Modifier.padding(top = 16.dp)
+            )
+        }
+    }
 }

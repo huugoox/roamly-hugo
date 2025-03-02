@@ -32,14 +32,6 @@ fun CompletedTripsScreen() {
             .background(Color(0xFFF8F9FA))
             .padding(16.dp)
     ) {
-        Text(
-            text = "Completed Trips ✅",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
         if (completedTrips.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text("No completed trips yet!", fontSize = 18.sp, color = Color.Gray)
