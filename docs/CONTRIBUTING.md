@@ -7,6 +7,7 @@ El trabajo se ha realizado mediante videollamadas y eventualmente este fin de se
 reunir presencialmente para establecer mejor las bases del proyecto.
 
 **Anotaciones**
+
 Queremos destacar que el soporte para varios idiomas aún está en una fase inicial de desarrollo
 en la qual tenemos la base de ellos (en la carpeta res/values/strings.xml).
 Si que tenemos creado el Toggle Switch en el apartado de configuración.
