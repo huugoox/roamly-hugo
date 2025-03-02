@@ -1,10 +1,10 @@
-# Travel Agency Data Model Design  
+# Modelo de Datos de Roamly  
 
-## Overview  
-This document describes the data model for a travel agency application. The model is designed to manage users, their trips, itineraries, preferences, and AI-driven recommendations. It also includes authentication and mapping functionalities.  
+## Introducción  
+Este documento describe el modelo de datos para una aplicación de agencia de viajes. El modelo está diseñado para gestionar usuarios, sus viajes, itinerarios, preferencias y recomendaciones impulsadas por IA. También incluye funcionalidades de autenticación y mapeo. 
 
-## Class Diagram  
-The following Mermaid class diagram represents the relationships between the different entities in the system:  
+## Diagrama de clases 
+El siguiente diagrama de clases en Mermaid representa las relaciones entre las diferentes entidades del sistema:
 
 ```mermaid  
 classDiagram  
