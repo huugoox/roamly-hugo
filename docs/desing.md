@@ -97,7 +97,9 @@ classDiagram
 ```
 
 A nivel de arquitectura hemos tomado las siguientes decisiones:
+
     - Hemos dividido nuestra barra inferior en tres botones principales.
+
     1. Explorar:
         Hemos considerado importante para una app de planificación de viajes mostrar en primer
         lugar el mapa que situa al usuario en su posición actual y en fases más avanzadas del 
