@@ -16,8 +16,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
@@ -34,91 +37,33 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 enum class PlanningMode {
-    EXPLORE, SEARCH, TRIPS
+    EXPLORE, SEARCH, FAVORITES, COMPLETED
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenScaffold2(navController: NavController) {
-    var showSettingsMenu by remember { mutableStateOf(false) }
     var selectedMode by remember { mutableStateOf(PlanningMode.EXPLORE) }
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Roamly Home") },
-                navigationIcon = {
-                    IconButton(onClick = { /* Acción del menú lateral */ }) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
-                    }
-                },
-                actions = {
-                    Box {
-                        IconButton(onClick = { showSettingsMenu = !showSettingsMenu }) {
-                            Icon(Icons.Outlined.Settings, contentDescription = "Settings")
-                        }
-                        DropdownMenu(
-                            expanded = showSettingsMenu,
-                            onDismissRequest = { showSettingsMenu = false }
-                        ) {
-                            DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Info, contentDescription = "About") },
-                                text = { Text("About") },
-                                onClick = {
-                                    showSettingsMenu = false
-                                    navController.navigate("about")
-                                }
-                            )
-                            DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Build, contentDescription = "Version Icon") },
-                                text = { Text("Version") },
-                                onClick = {
-                                    showSettingsMenu = false
-                                    navController.navigate("version")
-                                }
-                            )
-                            DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Profile") },
-                                text = { Text("Profile") },
-                                onClick = {
-                                    showSettingsMenu = false
-                                    navController.navigate("profile")
-                                }
-                            )
-                            DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = "Settings") },
-                                text = { Text("Settings") },
-                                onClick = {
-                                    showSettingsMenu = false
-                                    navController.navigate("settings")
-                                }
-                            )
-                            DropdownMenuItem(
-                                leadingIcon = { Icon(Icons.Filled.Star, contentDescription = "Terms and Conditions") },
-                                text = { Text("Terms & Conditions") },
-                                onClick = {
-                                    showSettingsMenu = false
-                                    navController.navigate("termsAndConditions")
-                                }
-                            )
-                        }
-                    }
-                }
+            TopAppBar(title = { Text("Roamly", color = Color.Black) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White
+                )
             )
         },
         bottomBar = {
-            BottomNavigationBar(
-                selectedMode = selectedMode,
-                onModeSelected = { selectedMode = it }
-            )
+            BottomNavigationBar(selectedMode) { selectedMode = it }
         },
-//        floatingActionButton = {
-//            FloatingActionButton(
-//                onClick = { /* Acción del FAB */ }
-//            ) {
-//                Icon(Icons.Filled.Settings, contentDescription = "Fast Configuration")
-//            }
-//        }
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navController.navigate("create_trip") },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(Icons.Filled.Add, contentDescription = "Create Trip")
+            }
+        }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -128,52 +73,52 @@ fun HomeScreenScaffold2(navController: NavController) {
         ) {
             when (selectedMode) {
                 PlanningMode.EXPLORE -> GlobeScreen()
-                PlanningMode.SEARCH -> {
-                    Text(
-                        text = "Search for Trips",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = Color.Black,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    // Aquí iría el composable para la búsqueda
-                }
-                PlanningMode.TRIPS -> {
-                    Text(
-                        text = "Your Trips",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = Color.Black,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    // Aquí iría el composable con los itinerarios del usuario
-                }
+                PlanningMode.SEARCH -> SearchScreen()
+                PlanningMode.FAVORITES -> FavoriteTripsScreen()
+                PlanningMode.COMPLETED -> CompletedTripsScreen()
             }
         }
     }
 }
 
 @Composable
-fun BottomNavigationBar(
-    selectedMode: PlanningMode,
-    onModeSelected: (PlanningMode) -> Unit
-) {
-    NavigationBar {
+fun BottomNavigationBar(selectedMode: PlanningMode, onModeSelected: (PlanningMode) -> Unit) {
+    NavigationBar (containerColor = Color.White){
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.List, contentDescription = "Itinerarios") },
-            label = { Text("Itinerarios") },
-            selected = selectedMode == PlanningMode.TRIPS,
-            onClick = { onModeSelected(PlanningMode.TRIPS) }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
-            label = { Text("Search") },
-            selected = selectedMode == PlanningMode.SEARCH,
-            onClick = { onModeSelected(PlanningMode.SEARCH) }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.Explore, contentDescription = "Explore") },
-            label = { Text("Explore") },
+            icon = { Icon(Icons.Filled.Explore, contentDescription = "Explore", tint = Color.Black) },
+            label = { Text("Explore", color = Color.Black) },
             selected = selectedMode == PlanningMode.EXPLORE,
-            onClick = { onModeSelected(PlanningMode.EXPLORE) }
+            onClick = { onModeSelected(PlanningMode.EXPLORE) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color.LightGray.copy(alpha = 0.2f)
+            )
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Filled.Search, contentDescription = "Search", tint = Color.Black) },
+            label = { Text("Search", color = Color.Black) },
+            selected = selectedMode == PlanningMode.SEARCH,
+            onClick = { onModeSelected(PlanningMode.SEARCH) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color.LightGray.copy(alpha = 0.2f)
+            )
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Filled.Favorite, contentDescription = "Favorites", tint = Color.Black) },
+            label = { Text("Favorites", color = Color.Black) },
+            selected = selectedMode == PlanningMode.FAVORITES,
+            onClick = { onModeSelected(PlanningMode.FAVORITES) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color.LightGray.copy(alpha = 0.2f)
+            )
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Filled.CheckCircle, contentDescription = "Completed", tint = Color.Black) },
+            label = { Text("Completed", color = Color.Black) },
+            selected = selectedMode == PlanningMode.COMPLETED,
+            onClick = { onModeSelected(PlanningMode.COMPLETED) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color.LightGray.copy(alpha = 0.2f)
+            )
         )
     }
 }
