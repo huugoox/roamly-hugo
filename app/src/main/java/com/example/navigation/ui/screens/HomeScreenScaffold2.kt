@@ -33,13 +33,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
+enum class PlanningMode {
+    EXPLORE, SEARCH, TRIPS
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenScaffold2(navController: NavController) {
     var showSettingsMenu by remember { mutableStateOf(false) }
-
-    // Estado para el elemento seleccionado del bottom app bar
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedMode by remember { mutableStateOf(PlanningMode.EXPLORE) }
 
     Scaffold(
         topBar = {
@@ -103,102 +105,75 @@ fun HomeScreenScaffold2(navController: NavController) {
                     }
                 }
             )
-
         },
         bottomBar = {
             BottomNavigationBar(
-                selectedIndex = selectedIndex,
-                onItemSelected = {
-                    selectedIndex = it
-                }
+                selectedMode = selectedMode,
+                onModeSelected = { selectedMode = it }
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Acción del FAB */ }
-            ) {
-                Icon(Icons.Filled.Settings, contentDescription = "Fast Configuration")
-            }
-        }
+//        floatingActionButton = {
+//            FloatingActionButton(
+//                onClick = { /* Acción del FAB */ }
+//            ) {
+//                Icon(Icons.Filled.Settings, contentDescription = "Fast Configuration")
+//            }
+//        }
     ) { padding ->
-        // Contenido de la pantalla
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(padding)
         ) {
-            Text(
-                text = "Explore Upcoming Trips",
-                style = MaterialTheme.typography.headlineSmall,
-                color = Color.Black,
-                modifier = Modifier.padding(16.dp)
-            )
-
-            TripList(navController)
-
-        }
-    }
-}
-@Composable
-fun TripList(navController: NavController) {
-    val trips = TripRepository.trips
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        items(trips) { trip ->
-            TripCard(trip = trip, onClick = {
-                // Aquí podrías navegar a una pantalla de detalles del viaje
-                navController.navigate("tripDetails/${trip.id}")
-            })
-        }
-    }
-}
-
-@Composable
-fun TripCard(trip: Trip, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(4.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = trip.destination, style = MaterialTheme.typography.titleLarge)
-            Text(text = "Start: ${trip.startDate}", style = MaterialTheme.typography.bodyMedium)
-            Text(text = "End: ${trip.endDate}", style = MaterialTheme.typography.bodyMedium)
-            Text(text = "Budget: \$${trip.budget}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+            when (selectedMode) {
+                PlanningMode.EXPLORE -> GlobeScreen()
+                PlanningMode.SEARCH -> {
+                    Text(
+                        text = "Search for Trips",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = Color.Black,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    // Aquí iría el composable para la búsqueda
+                }
+                PlanningMode.TRIPS -> {
+                    Text(
+                        text = "Your Trips",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = Color.Black,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    // Aquí iría el composable con los itinerarios del usuario
+                }
+            }
         }
     }
 }
 
 @Composable
 fun BottomNavigationBar(
-    selectedIndex: Int,
-    onItemSelected: (Int) -> Unit
+    selectedMode: PlanningMode,
+    onModeSelected: (PlanningMode) -> Unit
 ) {
     NavigationBar {
-
         NavigationBarItem(
             icon = { Icon(Icons.Filled.List, contentDescription = "Itinerarios") },
             label = { Text("Itinerarios") },
-            selected = selectedIndex == 0,
-            onClick = { onItemSelected(0) }
+            selected = selectedMode == PlanningMode.TRIPS,
+            onClick = { onModeSelected(PlanningMode.TRIPS) }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
             label = { Text("Search") },
-            selected = selectedIndex == 1,
-            onClick = { onItemSelected(1) }
+            selected = selectedMode == PlanningMode.SEARCH,
+            onClick = { onModeSelected(PlanningMode.SEARCH) }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Explore, contentDescription = "Explore") },
             label = { Text("Explore") },
-            selected = selectedIndex == 2,
-            onClick = { onItemSelected(2) }
+            selected = selectedMode == PlanningMode.EXPLORE,
+            onClick = { onModeSelected(PlanningMode.EXPLORE) }
         )
     }
 }
