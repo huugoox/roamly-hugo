@@ -56,9 +56,8 @@ fun CompletedTripCard(trip: Trip) {
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 6.dp)
     ) {
         Column {
-            // Imagen del destino
             Image(
-                painter = painterResource(R.drawable.logoroamly2),
+                painter = painterResource(R.drawable.ic_launcher),
                 contentDescription = trip.destination,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,7 +67,6 @@ fun CompletedTripCard(trip: Trip) {
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Detalles del viaje
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(text = trip.destination, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 Spacer(modifier = Modifier.height(4.dp))

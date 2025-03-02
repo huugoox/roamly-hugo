@@ -8,4 +8,6 @@ data class Preferences(
 ) {
     // @TODO: Implement update preferences function
     fun updatePreferences() {}
+    fun getPreferences() {}
+
 }

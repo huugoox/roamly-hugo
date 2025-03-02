@@ -61,14 +61,12 @@ fun SettingsScreen(navController: NavController) {
             SettingsOption("Terms & Conditions") { navController.navigate("termsAndConditions") }
             SettingsOption("Configure Profile") { navController.navigate("configureProfile") }
 
-            // Toggle Switch para cambiar idioma
             SettingsToggleSwitch(
                 title = "English Language",
                 isChecked = isEnglish,
                 onCheckedChange = { isEnglish = it }
             )
 
-            // Toggle Switch para activar modo oscuro
             SettingsToggleSwitch(
                 title = "Dark Mode",
                 isChecked = isDarkTheme,

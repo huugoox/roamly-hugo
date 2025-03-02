@@ -6,5 +6,5 @@ data class Image(
     val description: String
 ) {
     // @TODO: Implement function to upload an image
-    fun uploadImage() {}
+    fun uploadPhoto() {}
 }

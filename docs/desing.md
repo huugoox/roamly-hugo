@@ -12,7 +12,13 @@ classDiagram
         +String id  
         +String name  
         +String email  
-        +String phoneNumber  
+        +String phoneNumber
+        +String profilePictureUrl
+        +String bio
+        +Int followers
+        +Int following
+        +Int uploadedRoutes
+        +Int totalLikes
         +void register()  
         +void login(email, password)  
         +void logout()
@@ -29,6 +35,8 @@ classDiagram
     }  
     
     class Authentication {
+        +String email
+        +String password
         +void login(email, password)  
         +void logout()  
         +void resetPassword(email)  
@@ -86,3 +94,4 @@ classDiagram
     Trip "1" -- "*" AIRecommendations : gets  
     Map ..> Trip : shows location of
 ```
+

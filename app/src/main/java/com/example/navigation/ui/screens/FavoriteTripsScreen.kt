@@ -2,11 +2,9 @@ package com.example.navigation.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
@@ -19,15 +17,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.navigation.R
 import com.example.navigation.data.TripRepository
 import com.example.navigation.models.Trip
-import com.example.navigation.ui.components.TripCard
 
 @Composable
 fun FavoriteTripsScreen() {
-    val favoriteTrips = TripRepository.trips.take(2) // Simulación de favoritos
+    val favoriteTrips = TripRepository.trips.take(2)
 
     Column(
         modifier = Modifier

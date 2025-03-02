@@ -8,4 +8,6 @@ data class AIRecommendations(
 ) {
     // @TODO: Implement function to generate recommendations
     fun generateRecommendations() {}
+    // @TODO: Implement function to rate recommendations
+    fun rateRecommendation(rating: Double){}
 }

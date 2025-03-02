@@ -15,4 +15,7 @@ data class Trip(
 
     // @TODO: Implement function to remove an itinerary item
     fun removeItineraryItem() {}
+
+    //@TODO: Implement function to update an itinerary details
+    fun updateTripDetails() {}
 }
