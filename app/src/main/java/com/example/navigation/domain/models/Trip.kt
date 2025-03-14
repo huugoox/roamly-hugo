@@ -1,4 +1,4 @@
-package com.example.navigation.models
+package com.example.navigation.domain.models
 
 import androidx.compose.ui.graphics.painter.Painter
 import java.util.Date

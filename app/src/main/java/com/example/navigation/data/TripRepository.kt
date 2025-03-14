@@ -1,8 +1,8 @@
 package com.example.navigation.data
 
-import com.example.navigation.models.Trip
-import com.example.navigation.models.ItineraryItem
-import com.example.navigation.models.AIRecommendations
+import com.example.navigation.domain.models.Trip
+import com.example.navigation.domain.models.ItineraryItem
+import com.example.navigation.domain.models.AIRecommendations
 import java.util.Date
 
 object TripRepository {

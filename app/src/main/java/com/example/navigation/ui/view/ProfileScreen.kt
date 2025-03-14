@@ -1,16 +1,10 @@
-package com.example.navigation.ui.screens
+package com.example.navigation.ui.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -21,7 +15,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,6 +22,7 @@ import androidx.navigation.NavController
 import com.example.navigation.R
 
 import com.example.navigation.data.UserRepository
+import com.example.navigation.domain.models.User
 
 enum class ProfileSection {
     ROUTES, FAVORITES, COMPLETED
@@ -62,7 +56,7 @@ fun ProfileScreen(navController: NavController) {
 }
 
 @Composable
-fun ProfileHeader(user: com.example.navigation.models.User) {
+fun ProfileHeader(user: User) {
     Row (
         modifier = Modifier
             .fillMaxWidth()
@@ -105,7 +99,7 @@ fun ProfileHeader(user: com.example.navigation.models.User) {
 }
 
 @Composable
-fun ProfileStats(user: com.example.navigation.models.User) {
+fun ProfileStats(user: User) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceEvenly

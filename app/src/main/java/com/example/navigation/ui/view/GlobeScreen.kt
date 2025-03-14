@@ -1,4 +1,4 @@
-package com.example.navigation.ui.screens
+package com.example.navigation.ui.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.*
-import com.google.type.LatLng
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

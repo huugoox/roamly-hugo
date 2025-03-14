@@ -1,4 +1,4 @@
-package com.example.navigation.ui.screens
+package com.example.navigation.ui.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

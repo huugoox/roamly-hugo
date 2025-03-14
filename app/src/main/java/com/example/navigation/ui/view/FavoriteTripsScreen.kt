@@ -1,4 +1,4 @@
-package com.example.navigation.ui.screens
+package com.example.navigation.ui.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.navigation.R
 import com.example.navigation.data.TripRepository
-import com.example.navigation.models.Trip
+import com.example.navigation.domain.models.Trip
 
 @Composable
 fun FavoriteTripsScreen() {

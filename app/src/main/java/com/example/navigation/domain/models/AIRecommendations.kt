@@ -1,4 +1,4 @@
-package com.example.navigation.models
+package com.example.navigation.domain.models
 
 data class AIRecommendations(
     val recommendationId: String,

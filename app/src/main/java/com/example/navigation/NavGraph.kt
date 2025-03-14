@@ -9,11 +9,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.navigation.ui.screens.AboutScreen
-import com.example.navigation.ui.screens.HomeScreenScaffold2
-import com.example.navigation.ui.screens.LoginScreen2
-import com.example.navigation.ui.screens.ProfileScreen
-import com.example.navigation.ui.screens.TermsAndConditionsScreen
+import com.example.navigation.ui.view.AboutScreen
+import com.example.navigation.ui.view.HomeScreenScaffold2
+import com.example.navigation.ui.view.LoginScreen2
+import com.example.navigation.ui.view.ProfileScreen
+import com.example.navigation.ui.view.TermsAndConditionsScreen
 
 
 

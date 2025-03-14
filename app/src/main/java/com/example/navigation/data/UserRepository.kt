@@ -1,6 +1,6 @@
 package com.example.navigation.data
 
-import com.example.navigation.models.User
+import com.example.navigation.domain.models.User
 
 object UserRepository {
     val currentUser = User(
