@@ -1,8 +1,8 @@
-package com.example.navigation.data
+package com.example.navigation.domain.repository
 
 import com.example.navigation.domain.models.User
 
-object UserRepository {
+object UserRepository222 {
     val currentUser = User(
         id = "123",
         name = "John Doe",

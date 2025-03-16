@@ -1,4 +1,4 @@
-package com.example.localpreferences.ui.viewmodel
+package com.example.navigation.ui.viewmodel
 
 import android.content.Context
 import android.widget.Toast

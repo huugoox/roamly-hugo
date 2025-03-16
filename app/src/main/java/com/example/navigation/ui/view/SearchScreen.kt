@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.navigation.data.TripRepository
+import com.example.navigation.domain.repository.TripRepository222
 import com.example.navigation.ui.components.TripCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen() {
     var searchQuery by remember { mutableStateOf("") }
-    val filteredTrips = TripRepository.trips.filter { it.destination.contains(searchQuery, ignoreCase = true) }
+    val filteredTrips = TripRepository222.trips.filter { it.destination.contains(searchQuery, ignoreCase = true) }
 
     Scaffold(
         topBar = {

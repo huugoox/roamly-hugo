@@ -10,14 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.navigation.data.TripRepository
-import com.example.navigation.data.UserRepository
+import com.example.navigation.domain.repository.TripRepository222
+import com.example.navigation.domain.repository.UserRepository222
 import com.example.navigation.ui.components.TripCard
 
 @Composable
 fun UserTripsScreen() {
-    val user = UserRepository.currentUser
-    val trips = TripRepository.trips.take(user.uploadedRoutes)
+    val user = UserRepository222.currentUser
+    val trips = TripRepository222.trips.take(user.uploadedRoutes)
 
     Column(
         modifier = Modifier

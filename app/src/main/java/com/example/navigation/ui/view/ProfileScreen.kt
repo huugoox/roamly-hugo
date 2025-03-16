@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.navigation.R
 
-import com.example.navigation.data.UserRepository
+import com.example.navigation.domain.repository.UserRepository222
 import com.example.navigation.domain.models.User
 
 enum class ProfileSection {
@@ -30,7 +30,7 @@ enum class ProfileSection {
 
 @Composable
 fun ProfileScreen(navController: NavController) {
-    val user = UserRepository.currentUser
+    val user = UserRepository222.currentUser
     var selectedSection by remember { mutableStateOf(ProfileSection.ROUTES) }
 
     Scaffold(

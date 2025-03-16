@@ -1,6 +1,5 @@
 package com.example.navigation.domain.models
 
-import androidx.compose.ui.graphics.painter.Painter
 import java.util.Date
 
 data class Trip(
@@ -8,14 +7,8 @@ data class Trip(
     val destination: String,
     val startDate: Date,
     val endDate: Date,
-    val budget: Double
-) {
-    // @TODO: Implement function to add an itinerary item
-    fun addItineraryItem() {}
-
-    // @TODO: Implement function to remove an itinerary item
-    fun removeItineraryItem() {}
-
-    //@TODO: Implement function to update an itinerary details
-    fun updateTripDetails() {}
-}
+    val budget: Double,
+    val notes: String = "",
+    val isFavorite: Boolean = false,
+    val coverImageUrl: String? = null
+)

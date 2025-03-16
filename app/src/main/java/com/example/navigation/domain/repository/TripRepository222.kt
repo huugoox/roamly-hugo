@@ -1,11 +1,11 @@
-package com.example.navigation.data
+package com.example.navigation.domain.repository
 
 import com.example.navigation.domain.models.Trip
 import com.example.navigation.domain.models.ItineraryItem
 import com.example.navigation.domain.models.AIRecommendations
 import java.util.Date
 
-object TripRepository {
+object TripRepository222 {
     val trips = listOf(
         Trip(
             id = "1",
@@ -35,7 +35,8 @@ object TripRepository {
             id = "1",
             description = "Visit Eiffel Tower",
             date = Date(2024, 5, 11),
-            location = "Paris"
+            location = "Paris",
+            timestamp = Date().time
         ),
         ItineraryItem(
             id = "2",
@@ -53,19 +54,19 @@ object TripRepository {
 
     val aiRecommendations = listOf(
         AIRecommendations(
-            recommendationId = "1",
+            id = 1,
             tripId = "1",
             suggestedActivity = "Try French pastries at a local bakery",
             rating = 4.8
         ),
         AIRecommendations(
-            recommendationId = "2",
+            id = 2,
             tripId = "2",
             suggestedActivity = "Visit Akihabara for tech and anime shopping",
             rating = 4.7
         ),
         AIRecommendations(
-            recommendationId = "3",
+            id = 3,
             tripId = "3",
             suggestedActivity = "Walk through Central Park",
             rating = 4.9

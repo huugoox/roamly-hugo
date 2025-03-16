@@ -18,12 +18,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.navigation.R
-import com.example.navigation.data.TripRepository
+import com.example.navigation.domain.repository.TripRepository222
 import com.example.navigation.domain.models.Trip
 
 @Composable
 fun FavoriteTripsScreen() {
-    val favoriteTrips = TripRepository.trips.take(2)
+    val favoriteTrips = TripRepository222.trips.take(2)
 
     Column(
         modifier = Modifier
