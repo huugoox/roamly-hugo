@@ -1,0 +1,77 @@
+package com.example.roamly.domain.repository
+
+import com.example.roamly.domain.models.Trip
+import com.example.roamly.domain.models.ItineraryItem
+import com.example.roamly.domain.models.AIRecommendations
+import java.util.Calendar
+
+object TripRepository222 {
+    val trips = listOf(
+        Trip(
+            id = "1",
+            destination = "Rome, Italy",
+            startDate = Calendar.getInstance().apply { set(2024, Calendar.JUNE, 12) }.time,
+            endDate = Calendar.getInstance().apply { set(2024, Calendar.JUNE, 22) }.time,
+            budget = 2500.0
+        ),
+        Trip(
+            id = "2",
+            destination = "Cairo, Egypt",
+            startDate = Calendar.getInstance().apply { set(2024, Calendar.AUGUST, 3) }.time,
+            endDate = Calendar.getInstance().apply { set(2024, Calendar.AUGUST, 13) }.time,
+            budget = 1800.0
+        ),
+        Trip(
+            id = "3",
+            destination = "Sydney, Australia",
+            startDate = Calendar.getInstance().apply { set(2024, Calendar.NOVEMBER, 5) }.time,
+            endDate = Calendar.getInstance().apply { set(2024, Calendar.NOVEMBER, 15) }.time,
+            budget = 3200.0
+        )
+    )
+
+    val itineraryItems = listOf(
+        ItineraryItem(
+            id = "1",
+            tripId = "1",
+            description = "Colosseum Guided Tour",
+            date = Calendar.getInstance().apply { set(2024, Calendar.JUNE, 13) }.time,
+            location = "Rome"
+        ),
+        ItineraryItem(
+            id = "2",
+            tripId = "2",
+            description = "Sunset at the Pyramids of Giza",
+            date = Calendar.getInstance().apply { set(2024, Calendar.AUGUST, 4) }.time,
+            location = "Cairo"
+        ),
+        ItineraryItem(
+            id = "3",
+            tripId = "3",
+            description = "Sydney Opera House Backstage Tour",
+            date = Calendar.getInstance().apply { set(2024, Calendar.NOVEMBER, 6) }.time,
+            location = "Sydney"
+        )
+    )
+
+    val aiRecommendations = listOf(
+        AIRecommendations(
+            id = 1,
+            tripId = "1",
+            suggestedActivity = "Try authentic Italian gelato near the Trevi Fountain",
+            rating = 4.9
+        ),
+        AIRecommendations(
+            id = 2,
+            tripId = "2",
+            suggestedActivity = "Explore the Egyptian Museum for ancient artifacts",
+            rating = 4.7
+        ),
+        AIRecommendations(
+            id = 3,
+            tripId = "3",
+            suggestedActivity = "Take a ferry to Manly Beach for a scenic view of Sydney",
+            rating = 4.8
+        )
+    )
+}

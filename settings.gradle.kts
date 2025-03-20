@@ -20,6 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Navigation"
+rootProject.name = "Roamly"
 include(":app")
  
