@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class FormValidationViewModel @Inject constructor(
+class RegisterViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 

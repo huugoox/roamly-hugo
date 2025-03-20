@@ -10,10 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.roamly.ui.view.AboutScreen
-import com.example.roamly.ui.view.FormValidationScreen
 import com.example.roamly.ui.view.HomeScreenScaffold2
 import com.example.roamly.ui.view.LoginScreen2
 import com.example.roamly.ui.view.ProfileScreen
+import com.example.roamly.ui.view.RegisterScreen
 import com.example.roamly.ui.view.TermsAndConditionsScreen
 
 
@@ -39,6 +39,6 @@ fun NavGraph(navController: NavHostController) {
         composable("termsAndConditions"){ TermsAndConditionsScreen(navController) }
         composable ("settings"){ SettingsScreen(navController)  }
         composable("configureProfile") { ConfigureProfileScreen(navController)}
-        composable("register") { FormValidationScreen(navController)}
+        composable("register") { RegisterScreen(navController)}
     }
 }

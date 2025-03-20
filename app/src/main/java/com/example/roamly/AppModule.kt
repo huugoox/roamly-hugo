@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-import com.example.roamly.ui.viewmodel.FormValidationViewModel
+import com.example.roamly.ui.viewmodel.RegisterViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
@@ -29,6 +29,6 @@ object AppModule {
     @Singleton
     fun provideFormValidationViewModel(
         @ApplicationContext context: Context
-    ): FormValidationViewModel = FormValidationViewModel(context)
+    ): RegisterViewModel = RegisterViewModel(context)
 
 }

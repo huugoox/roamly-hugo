@@ -3,7 +3,7 @@ package com.example.roamly.utils
 object FormValidationUtils {
 
     fun validateUserEmail(email: String): Boolean {
-        return email.isNotEmpty()
+        return isEmailValid(email)
     }
 
     fun validatePassword(password: String): Boolean {
