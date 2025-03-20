@@ -23,7 +23,7 @@ enum class PlanningMode {
 }
 
 @Composable
-fun HomeScreenScaffold2(navController: NavController) {
+fun HomeScreen(navController: NavController) {
     var selectedMode by remember { mutableStateOf(PlanningMode.PROFILE) }
 
     Scaffold(

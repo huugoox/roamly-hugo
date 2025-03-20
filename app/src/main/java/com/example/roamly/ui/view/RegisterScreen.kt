@@ -145,11 +145,13 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             // Botón de Registro
             Button(
                 onClick = {
-                    val  success = viewModel.onRegisterClicked()
-                    if (success) {
+                    println("✅ Botón Sign Up presionado")
+                    val isValid = viewModel.validateAllFields()
+                    println("¿Validación exitosa? $isValid")
+                    if (isValid) {
+                        println("➡️ Intentando navegar a Home...")
                         navController.navigate("home")
-
-                }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen2(navController: NavController) {
+fun LoginScreen(navController: NavController) {
 
     // States for username, password, and the alert dialog
     var username by remember { mutableStateOf("p") }

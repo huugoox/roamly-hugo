@@ -10,20 +10,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.roamly.ui.view.AboutScreen
-import com.example.roamly.ui.view.HomeScreenScaffold2
-import com.example.roamly.ui.view.LoginScreen2
+import com.example.roamly.ui.view.HomeScreen
+import com.example.roamly.ui.view.ItineraryScreen
 import com.example.roamly.ui.view.ProfileScreen
 import com.example.roamly.ui.view.RegisterScreen
 import com.example.roamly.ui.view.TermsAndConditionsScreen
-
-
+import com.example.roamly.ui.view.LoginScreen
 
 
 @Composable
 fun NavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "login") {
-        composable("login") { LoginScreen2(navController) }
-        composable("home") { HomeScreenScaffold2(navController)
+        composable("login") { LoginScreen(navController) }
+        composable("home") { HomeScreen(navController)
         }
         composable("profile") { ProfileScreen(navController) }
         composable("profile/{id}",
@@ -40,5 +39,9 @@ fun NavGraph(navController: NavHostController) {
         composable ("settings"){ SettingsScreen(navController)  }
         composable("configureProfile") { ConfigureProfileScreen(navController)}
         composable("register") { RegisterScreen(navController)}
+        composable("itinerary/{tripId}") {backStackEntry ->
+            val tripId = backStackEntry.arguments?.getString("tripId") ?: return@composable
+            ItineraryScreen(navController, tripId)
+        }
     }
 }

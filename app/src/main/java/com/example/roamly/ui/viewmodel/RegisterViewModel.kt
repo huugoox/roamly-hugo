@@ -116,9 +116,9 @@ class RegisterViewModel @Inject constructor(
         val isPasswordValid = FormValidationUtils.validatePassword(password)
         val isConfirmPasswordValid = FormValidationUtils.validateConfirmationPassword(password, confirmPassword)
         val isStoreNameValid = FormValidationUtils.validateStoreName(storeName)
-        val isStoreLocationValid = FormValidationUtils.validateStoreLocation(storeLocation)
-        val isMobileValid = FormValidationUtils.validateMobile(mobile)
-        val isPinValid = FormValidationUtils.validatePin(pinCode)
+        val isStoreLocationValid = true
+        val isMobileValid = true
+        val isPinValid = true
 
         // Actualizamos los errores si no pasan la validación
 
@@ -141,7 +141,14 @@ class RegisterViewModel @Inject constructor(
 //            Text(text = stringResource(id = errorResId))
 //        }
 
-
+        println("🔍 Validación de Campos:")
+        println("📧 Email: $email → ¿Válido? $isEmailValid")
+        println("🔑 Password: $password → ¿Válido? $isPasswordValid")
+        println("🔁 Confirm Password: $confirmPassword → ¿Válido? $isConfirmPasswordValid")
+        println("🏪 Store Name: $storeName → ¿Válido? $isStoreNameValid")
+        println("📍 Store Location: $storeLocation → ¿Válido? $isStoreLocationValid")
+        println("📱 Mobile: $mobile → ¿Válido? $isMobileValid")
+        println("📌 Pin Code: $pinCode → ¿Válido? $isPinValid")
         // Asignamos el recurso que corresponda según cada validación
         emailError = if (!isEmailValid) context.getString(R.string.error_invalid_email) else null
         passwordError = if (!isPasswordValid) context.getString(R.string.error_password_too_short) else null

@@ -49,7 +49,7 @@ fun ProfileScreen(navController: NavController) {
             when (selectedSection) {
                 ProfileSection.ROUTES -> UserTripsScreen()
                 ProfileSection.FAVORITES -> FavoriteTripsScreen()
-                ProfileSection.COMPLETED -> CompletedTripsScreen()
+                ProfileSection.COMPLETED -> CompletedTripsScreen(navController)
             }
         }
     }
