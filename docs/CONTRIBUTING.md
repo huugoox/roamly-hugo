@@ -54,6 +54,7 @@ T3. Implement Data Validation and Testing (3 Points)
 Como se puede observar hemos intentado repartir las tareas aunque hemos participado
 directamente o indirectamente en todas ambos.
 
+
 **Anotaciones**
 
 1. Nuevamente hemos tenido issues con el tema del multi-language.
