@@ -127,10 +127,16 @@ Para interacturar con el itinierario el usuario debe ir:
 1. A la pàgina de profile (botón derecha abajo)
 2. Al apartado de completado
 3. Una vez ahi:
+
 a) En caso de tener algun viaje puede hacer click en el y ahi se le muestran varias opciones:
+
 3.1 - En caso de no tener itinerario puede crear uno haciendo click en el boton de + y añadir el nombre, la ubicación y la fecha
+
 3.2 - En caso de tener puede:
+    
 3.2.2 - Modificar el itinerario
+
 3.2.3 - Borrar el itineriaio
+
 
 b) En caso de no tener ningun viaje previamente se debe crear un viaje
