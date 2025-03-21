@@ -120,3 +120,17 @@ A nivel de arquitectura hemos tomado las siguientes decisiones:
         En esta pantalla el usuario podrá personalizar su perfil (nombre de usuario, correo y 
         foto de perfil en un futuro) y configurar la aplicación a su gusto (idioma, tema y notificaciones) 
         y hacer consultas sobre la app.
+
+
+## User interaction with itinerary structure.
+Para interacturar con el itinierario el usuario debe ir:
+1. A la pàgina de profile (botón derecha abajo)
+2. Al apartado de completado
+3. Una vez ahi:
+a) En caso de tener algun viaje puede hacer click en el y ahi se le muestran varias opciones:
+3.1 - En caso de no tener itinerario puede crear uno haciendo click en el boton de + y añadir el nombre, la ubicación y la fecha
+3.2 - En caso de tener puede:
+3.2.2 - Modificar el itinerario
+3.2.3 - Borrar el itineriaio
+
+b) En caso de no tener ningun viaje previamente se debe crear un viaje
