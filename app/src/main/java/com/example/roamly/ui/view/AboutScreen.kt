@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,12 +30,12 @@ fun AboutScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("About", color = Color.Black) },
+                title = { Text(stringResource(R.string.about_title), color = Color.Black) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(R.string.back),
                             tint = Color.Black
                         )
                     }
@@ -63,14 +64,13 @@ fun AboutScreen(navController: NavController) {
                 color = Color.Black
             )
             Text(
-                text = "Versión: ${AppInfo.versionName} (${AppInfo.versionCode})",
+                text = "${stringResource(R.string.version)}: ${AppInfo.versionName} (${AppInfo.versionCode})",
                 fontSize = 14.sp,
                 color = Color.Gray
             )
 
             Text(
-                text = "Somos dos alumnos apasionados por la inteligencia artificial y la tecnología, " +
-                        "y hemos desarrollado Roamly como un proyecto de hobby para mejorar la experiencia de viaje.",
+                text = stringResource(R.string.description),
                 fontSize = 16.sp,
                 color = Color.DarkGray,
                 modifier = Modifier.padding(horizontal = 10.dp),
@@ -79,18 +79,18 @@ fun AboutScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            StyleButton(text = "Visita nuestro LinkedIn") {
+            StyleButton(text = stringResource(R.string.linkedin_button)) {
                 val intent =
                     Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/pol-marsol/"))
                 context.startActivity(intent)
             }
 
-            StyleButton(text = "Visita nuestra web") {
+            StyleButton(text = stringResource(R.string.website_button)) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.allphysics.me"))
                 context.startActivity(intent)
             }
 
-            StyleButton(text = "Contáctanos") {
+            StyleButton(text = stringResource(R.string.contact_button)) {
                 val intent = Intent(Intent.ACTION_SENDTO).apply {
                     data = Uri.parse("mailto:roamly@contact.com")
                     putExtra(Intent.EXTRA_SUBJECT, "Consulta sobre Roamly")

@@ -11,8 +11,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.roamly.R
 import com.example.roamly.domain.repository.TripRepository222
 import com.example.roamly.ui.components.TripCard
 
@@ -32,7 +34,7 @@ fun SearchScreen() {
                             .padding(horizontal = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Search", color = Color.Black, modifier = Modifier.weight(1f))
+                        Text(stringResource(id = R.string.search), color = Color.Black, modifier = Modifier.weight(1f))
 
                         Box(
                             modifier = Modifier
@@ -86,7 +88,7 @@ fun SearchScreen() {
 
             if (filteredTrips.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No destinations found", fontSize = 18.sp, color = Color.Gray)
+                    Text(stringResource(id = R.string.no_destinations_found), fontSize = 18.sp, color = Color.Gray)
                 }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {

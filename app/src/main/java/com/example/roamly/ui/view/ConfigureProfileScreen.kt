@@ -8,10 +8,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.roamly.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,10 +25,10 @@ fun ConfigureProfileScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Configure Profile", color = Color.Black) },
+                title = { Text(stringResource(R.string.configure_profile), color = Color.Black) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.Black)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back), tint = Color.Black)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
@@ -41,15 +43,15 @@ fun ConfigureProfileScreen(navController: NavController) {
                 .padding(horizontal = 20.dp)
         ) {
             Text(
-                "Edit Your Profile",
+                stringResource(R.string.edit_your_profile),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 modifier = Modifier.padding(vertical = 16.dp)
             )
 
-            StyledTextField(value = name, label = "Name", onValueChange = { name = it })
-            StyledTextField(value = email, label = "Email", onValueChange = { email = it })
+            StyledTextField(value = name, label = stringResource(R.string.name), onValueChange = { name = it })
+            StyledTextField(value = email, label = stringResource(R.string.email), onValueChange = { email = it })
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -73,7 +75,7 @@ fun ConfigureProfileScreen(navController: NavController) {
                     .height(50.dp)
             ) {
                 Text(
-                    text = "Save changes".uppercase(),
+                    text = stringResource(R.string.save_changes).uppercase(),
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
                 )
@@ -85,7 +87,7 @@ fun ConfigureProfileScreen(navController: NavController) {
             onDismissRequest = { showAlert = false },
             containerColor = Color.White,
             title = { Text("Error", color = Color.Black) },
-            text = { Text("Please fill in all fields before saving.", color = Color.Black) },
+            text = { Text(stringResource(R.string.fill_all_fields), color = Color.Black) },
             confirmButton = {
                 Button(
                     onClick = { showAlert = false },

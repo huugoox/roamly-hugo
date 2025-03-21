@@ -1,6 +1,7 @@
 package com.example.roamly.ui.viewmodel
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -68,41 +69,52 @@ class RegisterViewModel @Inject constructor(
     // ======================
     fun onEmailChanged(newValue: String) {
         email = newValue
+        Log.d("RegisterViewModel", "Email cambiado: $newValue")
     }
 
     fun onPasswordChanged(newValue: String) {
         password = newValue
+        Log.d("RegisterViewModel", "Contraseña cambiada: $newValue")
     }
 
     fun onConfirmPasswordChanged(newValue: String) {
         confirmPassword = newValue
+        Log.d("RegisterViewModel", "Confirmación de contraseña cambiada: $newValue")
     }
 
     fun onStoreNameChanged(newValue: String) {
         storeName = newValue
+        Log.d("RegisterViewModel", "Nombre de la tienda cambiado: $newValue")
     }
 
     fun onStoreLocationChanged(newValue: String) {
         storeLocation = newValue
+        Log.d("RegisterViewModel", "Ubicación de la tienda cambiada: $newValue")
     }
 
     fun onMobileChanged(newValue: String) {
         mobile = newValue
+        Log.d("RegisterViewModel", "Número móvil cambiado: $newValue")
     }
 
     fun onPinCodeChanged(newValue: String) {
         pinCode = newValue
+        Log.d("RegisterViewModel", "Código PIN cambiado: $newValue")
     }
 
     // Llamado desde la UI al presionar "Registrar"
     fun onRegisterClicked(): Boolean {
         val allValid = validateAllFields()
-//        return allValid
 
+        // Log de la validación de campos
+        Log.d("RegisterViewModel", "Intentando registrar al usuario...")
         if (allValid) {
             // Mostrar Toast
             Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
+            Log.d("RegisterViewModel", "Registro exitoso")
             return true
+        } else {
+            Log.d("RegisterViewModel", "Registro fallido, hay errores en el formulario")
         }
 
         return false
@@ -116,31 +128,19 @@ class RegisterViewModel @Inject constructor(
         val isPasswordValid = FormValidationUtils.validatePassword(password)
         val isConfirmPasswordValid = FormValidationUtils.validateConfirmationPassword(password, confirmPassword)
         val isStoreNameValid = FormValidationUtils.validateStoreName(storeName)
-        val isStoreLocationValid = FormValidationUtils.validateStoreLocation(storeLocation)
-        val isMobileValid = FormValidationUtils.validateMobile(mobile)
-        val isPinValid = FormValidationUtils.validatePin(pinCode)
+        val isStoreLocationValid = true
+        val isMobileValid = true
+        val isPinValid = true
 
-        // Actualizamos los errores si no pasan la validación
-
-        // -->> Metodo directo
-//        emailError = if (!isEmailValid) "Email inválido" else null
-//        passwordError = if (!isPasswordValid) "La contraseña debe tener al menos 6 caracteres" else null
-//        confirmPasswordError = if (!isConfirmPasswordValid) "La contraseña no coincide" else null
-//        storeNameError = if (!isStoreNameValid) "Campo requerido" else null
-//        storeLocationError = if (!isStoreLocationValid) "Campo requerido" else null
-//        mobileError = if (!isMobileValid) "Debe tener 10 dígitos" else null
-//        pinCodeError = if (!isPinValid) "Debe tener 6 dígitos" else null
-
-//        //-->> Usando ids en la UI
-//        var emailError: Int? by mutableStateOf(null)
-//        emailError = if (!isEmailValid) R.string.error_invalid_email else null
-//
-//        //UI
-//        // Si hay un error, muestra el texto usando `stringResource`
-//        emailError?.let { errorResId ->
-//            Text(text = stringResource(id = errorResId))
-//        }
-
+        // Logs para las validaciones de cada campo
+        Log.d("RegisterViewModel", "🔍 Validación de Campos:")
+        Log.d("RegisterViewModel", "📧 Email: $email → ¿Válido? $isEmailValid")
+        Log.d("RegisterViewModel", "🔑 Password: $password → ¿Válido? $isPasswordValid")
+        Log.d("RegisterViewModel", "🔁 Confirm Password: $confirmPassword → ¿Válido? $isConfirmPasswordValid")
+        Log.d("RegisterViewModel", "🏪 Store Name: $storeName → ¿Válido? $isStoreNameValid")
+        Log.d("RegisterViewModel", "📍 Store Location: $storeLocation → ¿Válido? $isStoreLocationValid")
+        Log.d("RegisterViewModel", "📱 Mobile: $mobile → ¿Válido? $isMobileValid")
+        Log.d("RegisterViewModel", "📌 Pin Code: $pinCode → ¿Válido? $isPinValid")
 
         // Asignamos el recurso que corresponda según cada validación
         emailError = if (!isEmailValid) context.getString(R.string.error_invalid_email) else null

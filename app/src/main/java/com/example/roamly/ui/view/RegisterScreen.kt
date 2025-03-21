@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -61,7 +62,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             OutlinedTextField(
                 value = viewModel.storeName,
                 onValueChange = { viewModel.onStoreNameChanged(it) },
-                placeholder = { Text("Full Name", color = Color.Gray) },
+                placeholder = { Text(stringResource(id = R.string.full_name), color = Color.Gray) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 isError = viewModel.storeNameError != null,
@@ -81,7 +82,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             OutlinedTextField(
                 value = viewModel.email,
                 onValueChange = { viewModel.onEmailChanged(it) },
-                placeholder = { Text("Email", color = Color.Gray) },
+                placeholder = { Text(stringResource(id = R.string.email), color = Color.Gray) },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 shape = RoundedCornerShape(12.dp),
@@ -102,7 +103,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             OutlinedTextField(
                 value = viewModel.password,
                 onValueChange = { viewModel.onPasswordChanged(it) },
-                placeholder = { Text("Password", color = Color.Gray) },
+                placeholder = { Text(stringResource(id = R.string.password), color = Color.Gray) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -124,7 +125,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             OutlinedTextField(
                 value = viewModel.confirmPassword,
                 onValueChange = { viewModel.onConfirmPasswordChanged(it) },
-                placeholder = { Text("Confirm Password", color = Color.Gray) },
+                placeholder = { Text(stringResource(id = R.string.confirm_password), color = Color.Gray) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -145,11 +146,13 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             // Botón de Registro
             Button(
                 onClick = {
-                    val  success = viewModel.onRegisterClicked()
-                    if (success) {
+                    println("✅ Botón Sign Up presionado")
+                    val isValid = viewModel.validateAllFields()
+                    println("¿Validación exitosa? $isValid")
+                    if (isValid) {
+                        println("➡️ Intentando navegar a Home...")
                         navController.navigate("home")
-
-                }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -157,14 +160,14 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
-                Text(text = "Sign Up", color = Color.White, fontSize = 18.sp)
+                Text(text = stringResource(id = R.string.sign_up), color = Color.White, fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
             // Ir a Login
             TextButton(onClick = { navController.navigate("login") }) {
-                Text(text = "Already have an account? Log in", color = Color.Gray)
+                Text(text = stringResource(id = R.string.already_have_account), color = Color.Gray)
             }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,7 +50,7 @@ fun ProfileScreen(navController: NavController) {
             when (selectedSection) {
                 ProfileSection.ROUTES -> UserTripsScreen()
                 ProfileSection.FAVORITES -> FavoriteTripsScreen()
-                ProfileSection.COMPLETED -> CompletedTripsScreen()
+                ProfileSection.COMPLETED -> CompletedTripsScreen(navController)
             }
         }
     }
@@ -104,10 +105,10 @@ fun ProfileStats(user: User) {
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        StatItem(value = user.uploadedRoutes, label = "Rutas")
-        StatItem(value = user.followers, label = "Seguidores")
-        StatItem(value = user.following, label = "Seguidos")
-        StatItem(value = user.totalLikes, label = "Likes")
+        StatItem(value = user.uploadedRoutes, label = stringResource(id = R.string.routes))
+        StatItem(value = user.followers, label = stringResource(id = R.string.followers))
+        StatItem(value = user.following, label = stringResource(id = R.string.following))
+        StatItem(value = user.totalLikes, label = stringResource(id = R.string.likes))
     }
 }
 
@@ -121,7 +122,9 @@ fun StatItem(value: Int, label: String) {
 
 @Composable
 fun ProfileTabs(selectedTab: ProfileSection, onTabSelected: (ProfileSection) -> Unit) {
-    val tabs = listOf("Posts" to ProfileSection.ROUTES, "Favorites" to ProfileSection.FAVORITES, "Completed" to ProfileSection.COMPLETED)
+    val tabs = listOf(stringResource(id = R.string.posts) to ProfileSection.ROUTES,
+        stringResource(id = R.string.favorites) to ProfileSection.FAVORITES,
+        stringResource(id = R.string.completed) to ProfileSection.COMPLETED)
 
     TabRow(
         selectedTabIndex = tabs.indexOfFirst { it.second == selectedTab },
@@ -160,7 +163,7 @@ fun ProfileTabs(selectedTab: ProfileSection, onTabSelected: (ProfileSection) -> 
 @Composable
 fun ProfileTopBar(navController: NavController) {
     TopAppBar(
-        title = { Text("Profile", color = Color.Black) },
+        title = { Text(stringResource(id = R.string.profile), color = Color.Black) },
         actions = {
             IconButton(onClick = { navController.navigate("settings") {
                 popUpTo("profile") { inclusive = true }

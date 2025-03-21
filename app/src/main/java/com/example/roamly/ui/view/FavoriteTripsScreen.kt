@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.roamly.R
@@ -32,7 +33,7 @@ fun FavoriteTripsScreen() {
             .padding(16.dp)
     ) {
         if (favoriteTrips.isEmpty()) {
-            EmptyMessage("No tienes viajes favoritos aún.")
+            EmptyMessage(stringResource(R.string.no_favorite_trips))
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(favoriteTrips) { trip ->

@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen2(navController: NavController) {
+fun LoginScreen(navController: NavController) {
 
     // States for username, password, and the alert dialog
     var username by remember { mutableStateOf("p") }
@@ -126,16 +126,16 @@ fun LoginScreen2(navController: NavController) {
                     containerColor = Color.Black,
                 )
             ) {
-                Text(text = "Login", color = Color.White, fontSize = 18.sp)
+                Text(text = stringResource(id = R.string.login), color = Color.White, fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
             TextButton(onClick = { showRecoverDialog = true }) {
-                Text(text = "¿Forgotten password?", color = Color.Gray)
+                Text(text = stringResource(id = R.string.forgot_password), color = Color.Gray)
             }
             TextButton(onClick = {navController.navigate("register")}){
-                Text(text = "Don't have an account? Sign up", color = Color.Gray)
+                Text(text = stringResource(id = R.string.dont_have_account), color = Color.Gray)
             }
         }
 
@@ -144,8 +144,8 @@ fun LoginScreen2(navController: NavController) {
             AlertDialog(
                 onDismissRequest = { showAlert = false },
                 containerColor = Color.White,
-                title = { Text("Login Failed", color = Color.Black) },
-                text = { Text("Invalid username or password.", color = Color.Black) },
+                title = { Text(stringResource(id = R.string.login_failed), color = Color.Black) },
+                text = { Text(stringResource(id = R.string.invalid_username_password), color = Color.Black) },
                 confirmButton = {
                     Button(
                         onClick = { showAlert = false },
@@ -164,18 +164,18 @@ fun LoginScreen2(navController: NavController) {
             AlertDialog(
                 onDismissRequest = { showRecoverDialog = false },
                 containerColor = Color.White,
-                title = { Text("Recover Password", color = Color.Black) },
+                title = { Text(stringResource(id = R.string.recover_password), color = Color.Black) },
                 text = {
                     Column {
                         Text(
-                            "Enter your email to receive password recovery instructions.",
+                            stringResource(id = R.string.enter_email_recovery),
                             color = Color.Black
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         OutlinedTextField(
                             value = recoveryEmail,
                             onValueChange = { recoveryEmail = it },
-                            label = { Text("Email", color = Color.LightGray) },
+                            label = { Text(stringResource(id = R.string.email), color = Color.LightGray) },
                             modifier = Modifier.fillMaxWidth(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                             shape = RoundedCornerShape(12.dp),
@@ -218,7 +218,7 @@ fun LoginScreen2(navController: NavController) {
                             contentColor = Color.White
                         )
                     ) {
-                        Text("Send")
+                        Text(stringResource(id = R.string.send))
                     }
                 },
                 dismissButton = {
@@ -229,7 +229,7 @@ fun LoginScreen2(navController: NavController) {
                             contentColor = Color.White
                         )
                     ) {
-                        Text("Cancel")
+                        Text(stringResource(id = R.string.cancel))
                     }
                 }
             )
@@ -243,7 +243,7 @@ fun LoginScreen2(navController: NavController) {
                     showRecoverDialogRes = false
                     showRecoverDialog = false },
                 containerColor = Color.White,
-                title = { Text("Recovery Status", color = Color.Black) },
+                title = { Text(stringResource(id = R.string.recovery_status), color = Color.Black) },
                 text = { Text(recoveryMessage, color = Color.Black) },
                 confirmButton = {
                     Button(onClick = { showRecoverDialogRes = false },                        colors = ButtonDefaults.buttonColors(

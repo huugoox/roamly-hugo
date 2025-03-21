@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.roamly.R
 import com.example.roamly.domain.repository.TripRepository222
 import com.example.roamly.domain.repository.UserRepository222
 import com.example.roamly.ui.components.TripCard
@@ -26,7 +28,7 @@ fun UserTripsScreen() {
             .padding(16.dp)
     ) {
         if (trips.isEmpty()) {
-            EmptyStateMessage("No has subido ninguna ruta todavía.")
+            EmptyStateMessage(stringResource(id = R.string.no_uploaded_routes))
         } else {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
