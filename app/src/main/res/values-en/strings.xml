@@ -87,4 +87,5 @@
     <string name="terms_description">By using this app, you agree to our terms and conditions. Please review them carefully.</string>
     <string name="terms_list">1. You must comply with all applicable laws.\n2. We are not responsible for any damages resulting from app usage.\n3. We may update these terms at any time.</string>
     <string name="no_uploaded_routes">No uploaded routes yet</string>
+
 </resources>

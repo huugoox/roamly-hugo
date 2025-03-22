@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -161,14 +162,21 @@ fun LanguageDropdown(
             shape = RoundedCornerShape(12.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black
+                unfocusedBorderColor = Color.Black,
+                cursorColor = Color.Black,
+                focusedPlaceholderColor = Color.Black,
+                unfocusedPlaceholderColor = Color.Black,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
 
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.White, shape = RoundedCornerShape(12.dp)),
         ) {
             availableLanguages.forEach { lang ->
                 val langName = when (lang) {
@@ -178,11 +186,13 @@ fun LanguageDropdown(
                     else -> lang
                 }
                 DropdownMenuItem(
-                    text = { Text(langName) },
+                    text = { Text(langName, color = Color.Black) },
                     onClick = {
                         onLanguageSelected(lang)
                         expanded = false
-                    }
+                    }, modifier = Modifier
+                        .background(Color.White)
+                        .padding(4.dp)
                 )
             }
         }

@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.maps.android.compose.R
+import com.example.roamly.R
 
 enum class PlanningMode {
     EXPLORE, SEARCH, PROFILE
@@ -59,7 +59,7 @@ fun BottomNavigationBar(selectedMode: PlanningMode, onModeSelected: (PlanningMod
         ){
         NavigationBarItem(
             icon = { Icon(Icons.Rounded.Search, contentDescription = "Explore", tint = Color.Black) },
-            label = { Text("Explore", color = Color.Black) },
+            label = { Text(stringResource(id = R.string.explore), color = Color.Black) },
             selected = selectedMode == PlanningMode.EXPLORE,
             onClick = { onModeSelected(PlanningMode.EXPLORE) },
             colors = NavigationBarItemDefaults.colors(
@@ -68,7 +68,7 @@ fun BottomNavigationBar(selectedMode: PlanningMode, onModeSelected: (PlanningMod
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Search, contentDescription = "Search", tint = Color.Black) },
-            label = { Text("Search", color = Color.Black) },
+            label = { Text(stringResource(id = R.string.search), color = Color.Black) },
             selected = selectedMode == PlanningMode.SEARCH,
             onClick = { onModeSelected(PlanningMode.SEARCH) },
             colors = NavigationBarItemDefaults.colors(
@@ -77,7 +77,7 @@ fun BottomNavigationBar(selectedMode: PlanningMode, onModeSelected: (PlanningMod
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Person, contentDescription = "Profile", tint = Color.Black) },
-            label = { Text("Profile", color = Color.Black) },
+            label = { Text(stringResource(id = R.string.profile), color = Color.Black) },
             selected = selectedMode == PlanningMode.PROFILE,
             onClick = { onModeSelected(PlanningMode.PROFILE) },
             colors = NavigationBarItemDefaults.colors(

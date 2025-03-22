@@ -87,4 +87,5 @@
     <string name="terms_description">En utilitzar aquesta aplicació, acceptes els nostres termes i condicions. Si us plau, revisals acuradament.</string>
     <string name="terms_list">1. Heu de complir totes les lleis aplicables.\n2. No som responsables de cap dany derivat de lús de laplicació.\n3. Podem actualitzar aquests termes en qualsevol moment.</string>
     <string name="no_uploaded_routes">Encara no hi ha rutes pujades</string>
+
 </resources>
