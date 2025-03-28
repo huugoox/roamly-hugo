@@ -1,5 +1,6 @@
 package com.example.roamly.domain.repository
 
+import com.example.roamly.data.repository.TripRepositoryImpl
 import com.example.roamly.domain.models.Trip
 import org.junit.Assert.*
 import org.junit.Before

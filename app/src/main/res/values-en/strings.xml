@@ -2,22 +2,22 @@
     <string name="default_user">p</string>
     <string name="default_pass">1</string>
     <string name="default_email">polmarsoluni@gmail.com</string>
-    <string name="app_name" translatable="false">Roamly</string>
-    <string name="login">Log in</string>
+    <string name="login">Login</string>
+    <string name="app_name">Roamly</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="terms_conditions">Terms and Conditions</string>
-    <string name="welcome_back">Welcome back!</string>
+    <string name="welcome_back"> Welcome back!</string>
     <string name="error_invalid_email">Invalid email</string>
-    <string name="error_password_too_short">Password must be at least 6 characters long</string>
-    <string name="error_password_mismatch">Password does not match</string>
-    <string name="error_required_field">Required field</string>
-    <string name="error_mobile_digits">Must have 10 digits</string>
-    <string name="error_pin_digits">Must have 6 digits</string>
+    <string name="error_password_too_short">Password must be at least 6 characters</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_required_field">Field required</string>
+    <string name="error_mobile_digits">Must contain 10 digits</string>
+    <string name="error_pin_digits">Must contain 6 digits</string>
     <string name="about_title">About</string>
     <string name="back">Back</string>
-    <string name="version">Version\n</string>
+    <string name="version">Version</string>
     <string name="description">We are two students passionate about artificial intelligence and technology, and we have developed Roamly as a hobby project to enhance the travel experience.</string>
     <string name="linkedin_button">Visit our Linkedin</string>
     <string name="website_button">Visit our website.</string>
@@ -56,7 +56,7 @@
     <string name="select_date">Select date</string>
     <string name="date_in_past">Date cannot be in the past</string>
     <string name="update">Update</string>
-    <string name="dont_have_account">Dont have an account? Sign up</string>
+    <string name="dont_have_account">Don\'t have an account? Sign up</string>
     <string name="login_failed">Login failed</string>
     <string name="invalid_username_password">Invalid username or password</string>
     <string name="recover_password">Recover password</string>
@@ -87,5 +87,4 @@
     <string name="terms_description">By using this app, you agree to our terms and conditions. Please review them carefully.</string>
     <string name="terms_list">1. You must comply with all applicable laws.\n2. We are not responsible for any damages resulting from app usage.\n3. We may update these terms at any time.</string>
     <string name="no_uploaded_routes">No uploaded routes yet</string>
-
 </resources>

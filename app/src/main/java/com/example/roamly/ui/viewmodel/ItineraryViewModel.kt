@@ -21,7 +21,7 @@ class ItineraryViewModel @Inject constructor(
     val itineraryItems: StateFlow<List<ItineraryItem>> = _itineraryItems.asStateFlow()
     private val TAG = "ItineraryViewModel" // Definir un TAG para los logs
 
-    fun getItineraryItems(tripId: String): StateFlow<List<ItineraryItem>> {
+    fun getItineraryItems(tripId: Int): StateFlow<List<ItineraryItem>> {
         Log.d(TAG, "Solicitando itinerarios para el viaje con ID: $tripId")
         viewModelScope.launch {
             _itineraryItems.value = repository.getItineraryItems(tripId)
@@ -54,7 +54,7 @@ class ItineraryViewModel @Inject constructor(
         }
     }
 
-    fun deleteItineraryItem(id: String) {
+    fun deleteItineraryItem(id: Int) {
         Log.d(TAG, "Intentando eliminar itinerario con ID: $id")
         viewModelScope.launch {
             if (repository.deleteItineraryItem(id)) {

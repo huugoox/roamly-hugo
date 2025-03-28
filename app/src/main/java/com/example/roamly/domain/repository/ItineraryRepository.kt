@@ -4,10 +4,10 @@ import com.example.roamly.domain.models.ItineraryItem
 
 interface ItineraryRepository {
 
-    fun addItineraryItem(item: ItineraryItem): Boolean
-    fun getItineraryItems(tripId: String): List<ItineraryItem>
-    fun getItineraryItemById(id: String): ItineraryItem?
-    fun updateItineraryItem(item: ItineraryItem): Boolean
-    fun deleteItineraryItem(id: String): Boolean
+    suspend fun addItineraryItem(item: ItineraryItem): Boolean
+    suspend fun getItineraryItems(tripId: Int): List<ItineraryItem>
+    suspend fun getItineraryItemById(id: Int): ItineraryItem?
+    suspend fun updateItineraryItem(item: ItineraryItem): Boolean
+    suspend fun deleteItineraryItem(id: Int): Boolean
 
 }

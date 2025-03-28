@@ -1,9 +1,10 @@
-package com.example.roamly.domain.repository
+package com.example.roamly.data.repository
 
 import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.example.roamly.domain.models.Preferences
+import com.example.roamly.domain.repository.PreferencesRepository
 
 @Singleton
 class PreferencesRepositoryImpl @Inject constructor() : PreferencesRepository {
@@ -24,13 +25,13 @@ class PreferencesRepositoryImpl @Inject constructor() : PreferencesRepository {
         }
     }
 
-    override fun getPreferences(id: String): Preferences? {
+    override fun getPreferences(id: Int): Preferences? {
         Log.d(TAG, "Obteniendo las preferencias con ID: $id")
         return preferencesList.find { it.id == id }
     }
 
     override fun updatePreferences(
-        id: String,
+        id: Int,
         notificationsEnabled: Boolean?,
         preferredLanguage: String?,
         theme: String?
@@ -54,7 +55,7 @@ class PreferencesRepositoryImpl @Inject constructor() : PreferencesRepository {
         }
     }
 
-    override fun deletePreferences(id: String): Boolean {
+    override fun deletePreferences(id: Int): Boolean {
         Log.d(TAG, "Intentando eliminar las preferencias con ID: $id")
         val result = preferencesList.removeIf { it.id == id }
         if (result) {

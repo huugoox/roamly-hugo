@@ -1,8 +1,9 @@
-package com.example.roamly.domain.repository
+package com.example.roamly.data.repository
 
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.example.roamly.domain.models.Map
+import com.example.roamly.domain.repository.MapRepository
 
 @Singleton
 class MapRepositoryImpl @Inject constructor() : MapRepository {

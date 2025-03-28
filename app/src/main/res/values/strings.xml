@@ -2,8 +2,8 @@
     <string name="default_user">p</string>
     <string name="default_pass">1</string>
     <string name="default_email">polmarsoluni@gmail.com</string>
-    <string name="app_name" translatable="false">Roamly</string>
     <string name="login">Iniciar sesión</string>
+    <string name="app_name">Roamly</string>
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="forgot_password">¿Has olvidado la contraseña?</string>
@@ -17,7 +17,7 @@
     <string name="error_pin_digits">Debe tener 6 dígitos</string>
     <string name="about_title">Acerca de</string>
     <string name="back">Atrás</string>
-    <string name="version">Versión\n</string>
+    <string name="version">Versión</string>
     <string name="description">Somos dos estudiantes apasionados por la inteligencia artificial y la tecnología, y hemos desarrollado Roamly como un proyecto de ocio para mejorar la experiencia de viaje.</string>
     <string name="linkedin_button">Visita nuestro Linkedin</string>
     <string name="website_button">Visita nuestro sitio web.</string>
@@ -85,7 +85,7 @@
     <string name="catalan">Catalán</string>
     <string name="language">Idioma</string>
     <string name="terms_description">Al usar esta aplicación, aceptas nuestros términos y condiciones. Por favor, revísalos detenidamente.</string>
-    <string name="terms_list">1. Debes cumplir con todas las leyes aplicables.\n2. No somos responsables de ningún daño derivado del uso de la aplicación.\n3. Podemos actualizar estos términos en cualquier momento.</string>
+    <string name="terms_list">1. Debes cumplir con todas las leyes aplicables. 2. No somos responsables de ningún daño derivado del uso de la aplicación. 3. Podemos actualizar estos términos en cualquier momento.</string>
     <string name="no_uploaded_routes">Aún no hay rutas subidas</string>
 
 </resources>

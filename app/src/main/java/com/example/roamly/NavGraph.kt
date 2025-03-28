@@ -43,7 +43,8 @@ fun NavGraph(navController: NavHostController) {
         composable("itinerary/{tripId}",
             arguments = listOf(navArgument("tripId") { type = NavType.StringType })
         ) { backStackEntry ->
-            val tripId = backStackEntry.arguments?.getString("tripId") ?: return@composable
+            val tripIdString = backStackEntry.arguments?.getString("tripId") ?: return@composable
+            val tripId = tripIdString.toIntOrNull() ?: -1
             val tripName = navController.currentBackStackEntry?.savedStateHandle?.get<String>("tripName") ?: "Trip"
 
             ItineraryScreen(navController, tripId, tripName)

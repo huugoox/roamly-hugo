@@ -1,7 +1,8 @@
-package com.example.roamly.domain.repository
+package com.example.roamly.data.repository
 
 import android.util.Log
 import com.example.roamly.domain.models.Image
+import com.example.roamly.domain.repository.ImageRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +29,7 @@ class ImageRepositoryImpl @Inject constructor() : ImageRepository {
         return images.sortedByDescending { it.timestamp }
     }
 
-    override fun getImageById(id: String): Image? {
+    override fun getImageById(id: Int): Image? {
         Log.d(TAG, "Buscando imagen con ID: $id")
         val image = images.find { it.id == id }
         if (image != null) {
@@ -52,7 +53,7 @@ class ImageRepositoryImpl @Inject constructor() : ImageRepository {
         }
     }
 
-    override fun deleteImage(id: String): Boolean {
+    override fun deleteImage(id: Int): Boolean {
         Log.d(TAG, "Intentando eliminar imagen con ID: $id")
         val result = images.removeIf { it.id == id }
         if (result) {

@@ -32,7 +32,7 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItineraryScreen(navController: NavController, tripId: String, tripName: String, viewModel: ItineraryViewModel = hiltViewModel()) {
+fun ItineraryScreen(navController: NavController, tripId: Int, tripName: String, viewModel: ItineraryViewModel = hiltViewModel()) {
     val itineraryItems by viewModel.getItineraryItems(tripId).collectAsState(initial = emptyList())
     var showDialog by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
@@ -186,7 +186,7 @@ fun ItineraryScreen(navController: NavController, tripId: String, tripName: Stri
                                 if (editingItem == null) {
                                     viewModel.addItineraryItem(
                                         ItineraryItem(
-                                            id = UUID.randomUUID().toString(),
+                                            id = 0,
                                             tripId = tripId,
                                             description = activityName,
                                             date = activityDate,

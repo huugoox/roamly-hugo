@@ -1,6 +1,6 @@
 package com.example.roamly.domain
 import com.example.roamly.domain.models.ItineraryItem
-import com.example.roamly.domain.repository.ItineraryRepositoryImpl
+import com.example.roamly.data.repository.ItineraryRepositoryImpl
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

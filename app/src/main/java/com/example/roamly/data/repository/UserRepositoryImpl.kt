@@ -1,9 +1,10 @@
-package com.example.roamly.domain.repository
+package com.example.roamly.data.repository
 
 import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.example.roamly.domain.models.User
+import com.example.roamly.domain.repository.UserRepository
 
 @Singleton
 class UserRepositoryImpl @Inject constructor() : UserRepository {
@@ -11,7 +12,7 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
     private val users = mutableListOf<User>()
     private val TAG = "UserRepositoryImpl" // Definir un TAG para los logs
 
-    override fun getUserById(id: String): User? {
+    override fun getUserById(id: Int): User? {
         Log.d(TAG, "Buscando usuario con ID: $id")
         return users.find { it.id == id }
     }
@@ -35,7 +36,7 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
         }
     }
 
-    override fun deleteUser(id: String): Boolean {
+    override fun deleteUser(id: Int): Boolean {
         Log.d(TAG, "Intentando eliminar el usuario con ID: $id")
         val result = users.removeIf { it.id == id }
         if (result) {

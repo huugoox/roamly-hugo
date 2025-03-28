@@ -4,7 +4,7 @@ import com.example.roamly.domain.models.User
 
 object UserRepository222 {
     val currentUser = User(
-        id = "123",
+        id = 123,
         name = "John Doe",
         email = "johndoe@example.com",
         phoneNumber = "+123456789",

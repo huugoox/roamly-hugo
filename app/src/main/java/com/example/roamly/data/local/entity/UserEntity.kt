@@ -1,6 +1,9 @@
-package com.example.roamly.domain.models
+package com.example.roamly.data.local.entity
 
-data class User(
+import androidx.room.Entity
+
+@Entity(tableName = "users", primaryKeys = ["id"])
+data class UserEntity(
     val id: Int,
     val name: String,
     val email: String,

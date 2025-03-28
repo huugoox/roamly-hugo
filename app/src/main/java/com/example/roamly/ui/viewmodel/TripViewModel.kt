@@ -26,7 +26,9 @@ class TripViewModel @Inject constructor(
     private fun loadTrips() {
         Log.d("TripViewModel", "Cargando todos los viajes...")
         _trips.clear()
-        _trips.addAll(repository.getAllTrips())
+        viewModelScope.launch {
+            _trips.addAll(repository.getAllTrips())
+        }
         Log.d("TripViewModel", "Viajes cargados: ${_trips.size} viajes encontrados.")
     }
 
@@ -34,14 +36,14 @@ class TripViewModel @Inject constructor(
         if (destination.isNotEmpty()) {
             Log.d("TripViewModel", "Intentando agregar un nuevo viaje a $destination.")
             val newTrip = Trip(
-                id = UUID.randomUUID().toString(),
+                id = 0,
                 destination = destination,
                 startDate = startDate,
                 endDate = endDate,
                 budget = budget,
                 notes = notes,
                 isFavorite = isFavorite,
-                coverImageUrl = coverImageUrl
+                coverImageUrl = coverImageUrl ?: ""
             )
 
             viewModelScope.launch {
@@ -55,7 +57,7 @@ class TripViewModel @Inject constructor(
         }
     }
 
-    fun deleteTrip(tripId: String) {
+    fun deleteTrip(tripId: Int) {
         Log.d("TripViewModel", "Intentando eliminar el viaje con ID: $tripId")
         viewModelScope.launch {
             if (repository.deleteTrip(tripId)) {

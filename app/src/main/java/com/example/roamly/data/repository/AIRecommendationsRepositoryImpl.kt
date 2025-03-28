@@ -1,7 +1,8 @@
-package com.example.roamly.domain.repository
+package com.example.roamly.data.repository
 
 import android.util.Log
 import com.example.roamly.domain.models.AIRecommendations
+import com.example.roamly.domain.repository.AIRecommendationsRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +17,7 @@ class AIRecommendationsRepositoryImpl @Inject constructor(): AIRecommendationsRe
         return recommendations
     }
 
-    override fun generateRecommendation(tripId: String, activity: String, rating: Double) {
+    override fun generateRecommendation(tripId: Int, activity: String, rating: Double) {
         Log.d(TAG, "Generando recomendación para el viaje: $tripId, actividad: $activity, calificación: $rating")
 
         val newRecommendation = AIRecommendations(

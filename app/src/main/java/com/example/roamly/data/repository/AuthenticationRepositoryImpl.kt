@@ -1,7 +1,8 @@
-package com.example.roamly.domain.repository
+package com.example.roamly.data.repository
 
 import android.util.Log
 import com.example.roamly.domain.models.User
+import com.example.roamly.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
