@@ -17,19 +17,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import android.util.Log
 import com.example.roamly.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController) {
 
-    // States for username, password, and the alert dialog
-    var username by remember { mutableStateOf("hugo") }
-    var password by remember { mutableStateOf("1234") }
+    // States for email, password, and the alert dialog
+    var email by remember { mutableStateOf("hfs2@alumnes.udl.cat") }
+    var password by remember { mutableStateOf("123456") }
     var showAlert by remember { mutableStateOf(false) }
     var showRecoverDialog by remember { mutableStateOf(false) }
     var showRecoverDialogRes by remember { mutableStateOf(false) }
@@ -37,19 +40,20 @@ fun LoginScreen(navController: NavController) {
     var recoveryEmail by remember { mutableStateOf("") }
     var recoveryMessage by remember { mutableStateOf("") }
 
-    // Get default values from strings.xml
-    val defaultUser = stringResource(id = R.string.default_user)
-    val defaultPass = stringResource(id = R.string.default_pass)
+    // Default email for password recovery placeholder
     val defaultEmail = stringResource(id = R.string.default_email)
 
-    Box (modifier = Modifier
+    // Firebase Auth instance
+    val auth = remember { FirebaseAuth.getInstance() }
+
+    Box(
+        modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier
-                .padding(20.dp),
+            modifier = Modifier.padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -66,9 +70,10 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text(stringResource(id = R.string.username))},
+                value = email,
+                onValueChange = { email = it },
+                label = { Text(stringResource(id = R.string.email)) },
+                singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Transparent),
@@ -78,8 +83,8 @@ fun LoginScreen(navController: NavController) {
                     unfocusedTextColor = Color.Black,
                     focusedBorderColor = Color.Gray,
                     unfocusedBorderColor = Color.LightGray,
-                    cursorColor = Color.Black, // Color del cursor
-                    focusedLabelColor = Color.Gray, // Color del label cuando está en foco
+                    cursorColor = Color.Black,
+                    focusedLabelColor = Color.Gray,
                     unfocusedLabelColor = Color.DarkGray
                 )
             )
@@ -89,33 +94,43 @@ fun LoginScreen(navController: NavController) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text(stringResource(id = R.string.password)) },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Transparent),
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color.Gray,
                     unfocusedBorderColor = Color.LightGray,
-                    focusedTextColor = Color.Black, // Color del texto cuando está en foco
-                    unfocusedTextColor = Color.Black, // Color del texto cuando no está en foco
-                    cursorColor = Color.Black, // Color del cursor
-                    focusedLabelColor = Color.Gray, // Color del label cuando está en foco
-                    unfocusedLabelColor = Color.DarkGray // Color del label cuando no está en foco
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    cursorColor = Color.Black,
+                    focusedLabelColor = Color.Gray,
+                    unfocusedLabelColor = Color.DarkGray
                 )
             )
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
                 onClick = {
-                    if (username == defaultUser && password == defaultPass) {
-                        // Navigate to Home and remove Login from the back stack
-                        navController.navigate("home") {
-                            popUpTo("login") { inclusive = true }
+                    // Attempt Firebase login
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            auth.signInWithEmailAndPassword(email, password).await()
+                            withContext(Dispatchers.Main) {
+                                Log.d("LoginScreen", "Login successful")
+                                navController.navigate("home") {
+                                    popUpTo("login") { inclusive = true }
+                                }
+                            }
+                        } catch (e: Exception) {
+                            Log.e("LoginScreen", "Login failed", e)
+                            withContext(Dispatchers.Main) {
+                                showAlert = true
+                            }
                         }
-                    } else {
-                        showAlert = true
                     }
                 },
                 modifier = Modifier
@@ -123,10 +138,14 @@ fun LoginScreen(navController: NavController) {
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black,
+                    containerColor = Color.Black
                 )
             ) {
-                Text(text = stringResource(id = R.string.login), color = Color.White, fontSize = 18.sp)
+                Text(
+                    text = stringResource(id = R.string.login),
+                    color = Color.White,
+                    fontSize = 18.sp
+                )
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -134,7 +153,7 @@ fun LoginScreen(navController: NavController) {
             TextButton(onClick = { showRecoverDialog = true }) {
                 Text(text = stringResource(id = R.string.forgot_password), color = Color.Gray)
             }
-            TextButton(onClick = {navController.navigate("register")}){
+            TextButton(onClick = { navController.navigate("register") }) {
                 Text(text = stringResource(id = R.string.dont_have_account), color = Color.Gray)
             }
         }
@@ -182,18 +201,18 @@ fun LoginScreen(navController: NavController) {
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color.Gray,
                                 unfocusedBorderColor = Color.LightGray,
-                                focusedTextColor = Color.Black, // Color del texto cuando está en foco
-                                unfocusedTextColor = Color.Black, // Color del texto cuando no está en foco
-                                cursorColor = Color.Black, // Color del cursor
-                                focusedLabelColor = Color.Gray, // Color del label cuando está en foco
-                                unfocusedLabelColor = Color.DarkGray // Color del label cuando no está en foco
+                                focusedTextColor = Color.Black,
+                                unfocusedTextColor = Color.Black,
+                                cursorColor = Color.Black,
+                                focusedLabelColor = Color.Gray,
+                                unfocusedLabelColor = Color.DarkGray
                             )
                         )
                     }
                 },
                 confirmButton = {
                     Button(
-                        onClick = { // @ToDo
+                        onClick = {
                             CoroutineScope(Dispatchers.IO).launch {
                                 val isSuccess = if (recoveryEmail == defaultEmail) {
                                     sendRecoveryEmail(recoveryEmail)
@@ -204,8 +223,7 @@ fun LoginScreen(navController: NavController) {
                                     recoveryMessage = if (isSuccess) {
                                         "Recovery email sent successfully."
                                     } else {
-                                        "Failed to send recovery email. \n" +
-                                                " Please check the email address."
+                                        "Failed to send recovery email. \n Please check the email address."
                                     }
                                     showRecoverDialog = false
                                     showRecoverDialogRes = true
@@ -241,7 +259,8 @@ fun LoginScreen(navController: NavController) {
             AlertDialog(
                 onDismissRequest = {
                     showRecoverDialogRes = false
-                    showRecoverDialog = false },
+                    showRecoverDialog = false
+                },
                 containerColor = Color.White,
                 title = { Text(stringResource(id = R.string.recovery_status), color = Color.Black) },
                 text = { Text(recoveryMessage, color = Color.Black) },
@@ -258,6 +277,7 @@ fun LoginScreen(navController: NavController) {
     }
 }
 
+// Placeholder for actual recovery implementation
 suspend fun sendRecoveryEmail(email: String): Boolean {
     return try {
         true

@@ -3,6 +3,7 @@
     <string name="default_pass">1234</string>
     <string name="default_email">hfs2@alumnes.udl.cat</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="app_name">Roamly</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

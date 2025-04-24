@@ -13,6 +13,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,6 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.roamly.R
 import com.example.roamly.ui.viewmodel.SettingsViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,6 +91,8 @@ fun SettingsScreen(navController: NavController,
                 isChecked = isDarkTheme,
                 onCheckedChange = { viewModel.updateDarkTheme(it) }
             )
+
+            LogoutButton(navController)
         }
     }
 }
@@ -196,5 +201,25 @@ fun LanguageDropdown(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun LogoutButton(navController: NavController) {
+    val auth = FirebaseAuth.getInstance()
+    Button(
+        onClick = {
+            auth.signOut()
+            navController.navigate("login") {
+                popUpTo("home") { inclusive = true }
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 20.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Text(text = stringResource(id = R.string.logout), color = Color.White)
     }
 }

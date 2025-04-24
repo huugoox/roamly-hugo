@@ -4,6 +4,7 @@
     <string name="default_email">hfs2@alumnes.udl.cat</string>
     <string name="app_name">Roamly</string>
     <string name="login">Iniciar sessió</string>
+    <string name="logout">Tancar sessió</string>
     <string name="username">Usuari</string>
     <string name="password">Contrasenya</string>
     <string name="forgot_password">Has oblidat la contrasenya?</string>
