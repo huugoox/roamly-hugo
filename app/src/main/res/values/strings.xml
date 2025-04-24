@@ -1,7 +1,7 @@
 <resources>
-    <string name="default_user">p</string>
-    <string name="default_pass">1</string>
-    <string name="default_email">polmarsoluni@gmail.com</string>
+    <string name="default_user">hugo</string>
+    <string name="default_pass">1234</string>
+    <string name="default_email">hfs2@alumnes.udl.cat</string>
     <string name="login">Iniciar sesión</string>
     <string name="app_name">Roamly</string>
     <string name="username">Usuario</string>

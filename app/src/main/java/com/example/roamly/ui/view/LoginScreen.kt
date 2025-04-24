@@ -28,8 +28,8 @@ import kotlinx.coroutines.withContext
 fun LoginScreen(navController: NavController) {
 
     // States for username, password, and the alert dialog
-    var username by remember { mutableStateOf("p") }
-    var password by remember { mutableStateOf("1") }
+    var username by remember { mutableStateOf("hugo") }
+    var password by remember { mutableStateOf("1234") }
     var showAlert by remember { mutableStateOf(false) }
     var showRecoverDialog by remember { mutableStateOf(false) }
     var showRecoverDialogRes by remember { mutableStateOf(false) }
