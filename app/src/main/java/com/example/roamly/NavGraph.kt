@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.authentication.ui.viewmodels.AuthViewModel
 import com.example.roamly.ui.view.AboutScreen
 import com.example.roamly.ui.view.HomeScreen
 import com.example.roamly.ui.view.ItineraryScreen

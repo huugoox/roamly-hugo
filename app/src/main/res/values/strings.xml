@@ -16,6 +16,7 @@
     <string name="error_required_field">Campo obligatorio</string>
     <string name="error_mobile_digits">Debe tener 10 dígitos</string>
     <string name="error_pin_digits">Debe tener 6 dígitos</string>
+    <string name="error_invalid_username">Nombre de usuario ya existente</string>
     <string name="about_title">Acerca de</string>
     <string name="back">Atrás</string>
     <string name="version">Versión</string>

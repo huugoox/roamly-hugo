@@ -50,7 +50,7 @@ import com.google.firebase.auth.FirebaseAuth
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(navController: NavController,
-    viewModel: SettingsViewModel = hiltViewModel()
+                   viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val isDarkTheme by remember { mutableStateOf(viewModel.isDarkTheme) }
     val language by remember { mutableStateOf(viewModel.language) }

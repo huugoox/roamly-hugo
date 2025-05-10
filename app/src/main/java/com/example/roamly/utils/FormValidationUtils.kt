@@ -1,4 +1,5 @@
 package com.example.roamly.utils
+import android.util.Patterns
 
 object FormValidationUtils {
 
@@ -26,16 +27,20 @@ object FormValidationUtils {
     }
 
     fun validateMobile(mobile: String): Boolean {
-         return mobile.isNotEmpty() && mobile.length == 10
+        return mobile.isNotEmpty() && mobile.length == 10
     }
 
-    fun validatePin(pinCode: String): Boolean{
+    fun validatePin(pinCode: String): Boolean {
         return pinCode.isNotEmpty() && pinCode.length == 6
     }
 
-    private fun isEmailValid(email: String): Boolean {
-        val emailRegex = Regex("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-        return emailRegex.matches(email)
+    fun validateUsername(username: String): Boolean {
+        return username.isNotEmpty() && username.length in 3..20  // Validación básica: no vacío y longitud entre 3 y 20 caracteres
     }
+
+    private fun isEmailValid(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
 
 }

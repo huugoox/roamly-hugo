@@ -8,10 +8,13 @@ import com.example.roamly.BuildConfig
 import com.example.roamly.data.local.AppDatabase
 import com.example.roamly.data.local.dao.ItineraryDao
 import com.example.roamly.data.local.dao.TripDao
+import com.example.roamly.data.local.dao.UsersDao
 import com.example.roamly.domain.repository.ItineraryRepository
 import com.example.roamly.data.repository.ItineraryRepositoryImpl
 import com.example.roamly.domain.repository.TripRepository
 import com.example.roamly.data.repository.TripRepositoryImpl
+import com.example.roamly.data.repository.UserRepositoryImpl
+import com.example.roamly.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,8 +40,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFormValidationViewModel(
-        @ApplicationContext context: Context
-    ): RegisterViewModel = RegisterViewModel(context)
+        @ApplicationContext context: Context,
+        userRepository: UserRepository,
+        usersDao: UsersDao
+    ): RegisterViewModel = RegisterViewModel(context, userRepository, usersDao)
 
     @Provides
     @Singleton
@@ -53,6 +58,12 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
+    fun provideUserRepository(usersDao: UsersDao): UserRepository {
+        return UserRepositoryImpl(usersDao)
+    }
+
+    @Provides
     fun provideTripDao(db: AppDatabase): TripDao {
         return db.tripDao()
     }
@@ -63,12 +74,18 @@ object AppModule {
     }
 
     @Provides
+    fun provideUsersDao(db: AppDatabase): UsersDao {
+        return db.usersDao()
+    }
+
+    @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
             "roamly_database"
-        ).build()
+        )//.fallbackToDestructiveMigration().build()
+            .build()
     }
 }

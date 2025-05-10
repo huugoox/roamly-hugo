@@ -1,14 +1,22 @@
 package com.example.roamly.domain.models
 
+import java.util.Date
+
 data class User(
     val id: Int,
-    val name: String,
+    val fullName: String,
     val email: String,
+    val username: String,
+    val password: String,
+    val birthdate: Long,
+    val address: String,
+    val country: String,
     val phoneNumber: String,
-    val profilePictureUrl: String? = null,
-    val bio: String = "",
-    val followers: Int = 0,
-    val following: Int = 0,
-    val totalLikes: Int = 0,
-    val uploadedRoutes: Int = 0
+    val acceptEmails: Boolean,
+    val uploadedRoutes: Int,
+    val followers: Int,
+    val following: Int,
+    val totalLikes: Int
 )
+
+

@@ -190,7 +190,9 @@ fun ItineraryScreen(navController: NavController, tripId: Int, tripName: String,
                                             tripId = tripId,
                                             description = activityName,
                                             date = activityDate,
-                                            location = location
+                                            location = location,
+                                            //startTime = activityDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalTime(),
+                                            //endTime = activityDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalTime()
                                         )
                                     )
                                 } else {

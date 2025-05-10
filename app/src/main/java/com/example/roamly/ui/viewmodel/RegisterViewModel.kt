@@ -7,20 +7,39 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.authentication.ui.viewmodels.AuthViewModel
 import com.example.roamly.R
+import com.example.roamly.data.local.dao.UsersDao
+import com.example.roamly.data.local.entity.UserEntity
+import com.example.roamly.domain.repository.UserRepository
 import com.example.roamly.utils.FormValidationUtils
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
-
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val userRepository: UserRepository,
+    private val userDao: UsersDao // Inyectamos el DAO
 ) : ViewModel() {
 
-    // Campos del formulario
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    // ====================== Campos del formulario ======================
+    var fullName by mutableStateOf("")
+        private set
+
     var email by mutableStateOf("")
+        private set
+
+    var username by mutableStateOf("")
         private set
 
     var password by mutableStateOf("")
@@ -29,20 +48,29 @@ class RegisterViewModel @Inject constructor(
     var confirmPassword by mutableStateOf("")
         private set
 
-    var storeName by mutableStateOf("")
+    var birthdate by mutableStateOf("")
         private set
 
-    var storeLocation by mutableStateOf("")
+    var address by mutableStateOf("")
         private set
 
-    var mobile by mutableStateOf("")
+    var country by mutableStateOf("")
         private set
 
-    var pinCode by mutableStateOf("")
+    var phoneNumber by mutableStateOf("")
         private set
 
-    // Mensajes de error (null si no hay error)
+    var acceptEmails by mutableStateOf(false)
+        private set
+
+    // ========================== Mensajes de error ==========================
+    var fullNameError by mutableStateOf<String?>(null)
+        private set
+
     var emailError by mutableStateOf<String?>(null)
+        private set
+
+    var usernameError by mutableStateOf<String?>(null)
         private set
 
     var passwordError by mutableStateOf<String?>(null)
@@ -51,110 +79,161 @@ class RegisterViewModel @Inject constructor(
     var confirmPasswordError by mutableStateOf<String?>(null)
         private set
 
-    var storeNameError by mutableStateOf<String?>(null)
+    var birthdateError by mutableStateOf<String?>(null)
         private set
 
-    var storeLocationError by mutableStateOf<String?>(null)
+    var addressError by mutableStateOf<String?>(null)
         private set
 
-    var mobileError by mutableStateOf<String?>(null)
+    var countryError by mutableStateOf<String?>(null)
         private set
 
-    var pinCodeError by mutableStateOf<String?>(null)
+    var phoneNumberError by mutableStateOf<String?>(null)
         private set
 
+    // ========================== Setters de cada campo ==========================
+    fun onFullNameChanged(newValue: String) {
+        fullName = newValue
+    }
 
-    // ======================
-    //  Setters de cada campo
-    // ======================
     fun onEmailChanged(newValue: String) {
         email = newValue
-        Log.d("RegisterViewModel", "Email cambiado: $newValue")
+    }
+
+    fun onUsernameChanged(newValue: String) {
+        username = newValue
     }
 
     fun onPasswordChanged(newValue: String) {
         password = newValue
-        Log.d("RegisterViewModel", "Contraseña cambiada: $newValue")
     }
 
     fun onConfirmPasswordChanged(newValue: String) {
         confirmPassword = newValue
-        Log.d("RegisterViewModel", "Confirmación de contraseña cambiada: $newValue")
     }
 
-    fun onStoreNameChanged(newValue: String) {
-        storeName = newValue
-        Log.d("RegisterViewModel", "Nombre de la tienda cambiado: $newValue")
+    fun onBirthdateChanged(newValue: String) {
+        birthdate = newValue
     }
 
-    fun onStoreLocationChanged(newValue: String) {
-        storeLocation = newValue
-        Log.d("RegisterViewModel", "Ubicación de la tienda cambiada: $newValue")
+    fun onAddressChanged(newValue: String) {
+        address = newValue
     }
 
-    fun onMobileChanged(newValue: String) {
-        mobile = newValue
-        Log.d("RegisterViewModel", "Número móvil cambiado: $newValue")
+    fun onCountryChanged(newValue: String) {
+        country = newValue
     }
 
-    fun onPinCodeChanged(newValue: String) {
-        pinCode = newValue
-        Log.d("RegisterViewModel", "Código PIN cambiado: $newValue")
+    fun onPhoneNumberChanged(newValue: String) {
+        phoneNumber = newValue
     }
 
-    // Llamado desde la UI al presionar "Registrar"
+    fun onAcceptEmailsChanged(newValue: Boolean) {
+        acceptEmails = newValue
+    }
+
+    // ========================== Acción principal: Registrar ==========================
     fun onRegisterClicked(): Boolean {
+
         val allValid = validateAllFields()
 
-        // Log de la validación de campos
-        Log.d("RegisterViewModel", "Intentando registrar al usuario...")
         if (allValid) {
-            // Mostrar Toast
+            val birthdateTimestamp = convertToTimestamp(birthdate)
+
+            // Creamos el objeto UserEntity
+            val userEntity = UserEntity(
+                fullName = fullName,
+                email = email,
+                username = username,
+                password = password,
+                birthdate = birthdateTimestamp,
+                address = address,
+                country = country,
+                phoneNumber = phoneNumber,
+                acceptEmails = acceptEmails,
+                uploadedRoutes = 0, // Valor predeterminado
+                followers = 0, // Valor predeterminado
+                following = 0, // Valor predeterminado
+                totalLikes = 0 // Valor predeterminado
+            )
+
+            registerUserInFirebase(userEntity)
+
+
             Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
-            Log.d("RegisterViewModel", "Registro exitoso")
             return true
         } else {
-            Log.d("RegisterViewModel", "Registro fallido, hay errores en el formulario")
+            return false
         }
-
-        return false
     }
 
-    // ==================================
-    //  Lógica para validar todos los campos
-    // ==================================
+    private fun registerUserInFirebase(userEntity: UserEntity) {
+        auth.createUserWithEmailAndPassword(userEntity.email, userEntity.password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Después de registrar al usuario, enviar correo de verificación
+                    AuthViewModel().sendEmailVerification()
+
+                    // Insertar el usuario en la base de datos local
+                    insertUser(userEntity)
+
+                    Toast.makeText(context, "Verifica tu correo electrónico", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e("RegisterViewModel", "Error al registrar usuario en Firebase: ${task.exception?.message}")
+                }
+            }
+    }
+
+    // ========================== Método para insertar el usuario en Room ==========================
+    private fun insertUser(userEntity: UserEntity) {
+        viewModelScope.launch {
+            try {
+                userDao.addUser(userEntity)
+                Log.d("RegisterViewModel", "Usuario insertado en la base de datos con éxito")
+            } catch (e: Exception) {
+                Log.e("RegisterViewModel", "Error al insertar usuario: ${e.message}")
+            }
+        }
+    }
+
+    // ========================== Convertir la fecha de nacimiento en timestamp ==========================
+    private fun convertToTimestamp(birthdate: String): Long {
+        return try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date: Date = sdf.parse(birthdate) ?: Date()
+            date.time
+        } catch (e: Exception) {
+            0L // Si hay un error al convertir, devolvemos 0
+        }
+    }
+
+    // ========================== Validación de todos los campos ==========================
     fun validateAllFields(): Boolean {
+        val isFullNameValid = fullName.isNotBlank()
         val isEmailValid = FormValidationUtils.validateUserEmail(email)
+        val isUsernameValid = FormValidationUtils.validateUsername(username)
         val isPasswordValid = FormValidationUtils.validatePassword(password)
         val isConfirmPasswordValid = FormValidationUtils.validateConfirmationPassword(password, confirmPassword)
-        val isStoreNameValid = FormValidationUtils.validateStoreName(storeName)
-        val isStoreLocationValid = true
-        val isMobileValid = true
-        val isPinValid = true
+        val isBirthdateValid = birthdate.isNotBlank()
+        val isAddressValid = address.isNotBlank()
+        val isCountryValid = country.isNotBlank()
+        val isPhoneNumberValid = phoneNumber.isNotBlank()
 
-        // Logs para las validaciones de cada campo
-        Log.d("RegisterViewModel", "🔍 Validación de Campos:")
-        Log.d("RegisterViewModel", "📧 Email: $email → ¿Válido? $isEmailValid")
-        Log.d("RegisterViewModel", "🔑 Password: $password → ¿Válido? $isPasswordValid")
-        Log.d("RegisterViewModel", "🔁 Confirm Password: $confirmPassword → ¿Válido? $isConfirmPasswordValid")
-        Log.d("RegisterViewModel", "🏪 Store Name: $storeName → ¿Válido? $isStoreNameValid")
-        Log.d("RegisterViewModel", "📍 Store Location: $storeLocation → ¿Válido? $isStoreLocationValid")
-        Log.d("RegisterViewModel", "📱 Mobile: $mobile → ¿Válido? $isMobileValid")
-        Log.d("RegisterViewModel", "📌 Pin Code: $pinCode → ¿Válido? $isPinValid")
 
-        // Asignamos el recurso que corresponda según cada validación
+        // Asignamos errores si no pasa
+        fullNameError = if (!isFullNameValid) context.getString(R.string.error_required_field) else null
         emailError = if (!isEmailValid) context.getString(R.string.error_invalid_email) else null
+        usernameError = if (!isUsernameValid) context.getString(R.string.error_required_field) else null
         passwordError = if (!isPasswordValid) context.getString(R.string.error_password_too_short) else null
         confirmPasswordError = if (!isConfirmPasswordValid) context.getString(R.string.error_password_mismatch) else null
-        storeNameError = if (!isStoreNameValid) context.getString(R.string.error_required_field) else null
-        storeLocationError = if (!isStoreLocationValid) context.getString(R.string.error_required_field) else null
-        mobileError = if (!isMobileValid) context.getString(R.string.error_mobile_digits) else null
-        pinCodeError = if (!isPinValid) context.getString(R.string.error_pin_digits) else null
+        birthdateError = if (!isBirthdateValid) context.getString(R.string.error_required_field) else null
+        addressError = if (!isAddressValid) context.getString(R.string.error_required_field) else null
+        countryError = if (!isCountryValid) context.getString(R.string.error_required_field) else null
+        phoneNumberError = if (!isPhoneNumberValid) context.getString(R.string.error_mobile_digits) else null
 
-        // Devuelve true si todo es válido
-        return isEmailValid && isPasswordValid && isConfirmPasswordValid &&
-                isStoreNameValid && isStoreLocationValid &&
-                isMobileValid && isPinValid
+        // Devuelve true solo si todo es válido
+        return isFullNameValid && isEmailValid && isUsernameValid && isPasswordValid &&
+                isConfirmPasswordValid && isBirthdateValid && isAddressValid &&
+                isCountryValid && isPhoneNumberValid
     }
-
 }

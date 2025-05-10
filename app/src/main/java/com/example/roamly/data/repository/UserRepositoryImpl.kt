@@ -1,49 +1,51 @@
 package com.example.roamly.data.repository
 
 import android.util.Log
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.example.roamly.data.local.dao.UsersDao
+import com.example.roamly.data.local.entity.UserEntity
+import com.example.roamly.data.local.mapper.toDomain
+import com.example.roamly.data.local.mapper.toEntity
 import com.example.roamly.domain.models.User
 import com.example.roamly.domain.repository.UserRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
-class UserRepositoryImpl @Inject constructor() : UserRepository {
+class UserRepositoryImpl @Inject constructor(
+    private val usersDao: UsersDao // Inyectamos el UsersDao para interactuar con la base de datos
+) : UserRepository {
 
-    private val users = mutableListOf<User>()
     private val TAG = "UserRepositoryImpl" // Definir un TAG para los logs
 
-    override fun getUserById(id: Int): User? {
+    override suspend fun getUserById(id: Int): User? {
         Log.d(TAG, "Buscando usuario con ID: $id")
-        return users.find { it.id == id }
+        val userEntity = usersDao.getUserById(id) // Obtenemos el usuario de la base de datos
+        return userEntity?.toDomain() // Convertimos a modelo de dominio
     }
 
-    override fun getAllUsers(): List<User> {
+
+    override suspend fun getAllUsers(): List<User> {
         Log.d(TAG, "Obteniendo todos los usuarios")
-        return users
+        return usersDao.getUsers().map { it.toDomain() } // Obtenemos todos los usuarios y los convertimos
     }
 
-    override fun updateUser(user: User): Boolean {
+    override suspend fun updateUser(user: User): Boolean {
         Log.d(TAG, "Intentando actualizar el usuario con ID: ${user.id}")
+        val userEntity = user.toEntity() // Convertimos el modelo de dominio a entidad de base de datos
+        val rowsUpdated = usersDao.updateUser(userEntity) // Actualizamos en la base de datos
+        return rowsUpdated > 0 // Si se actualizó alguna fila, devolvemos true
+    }
 
-        val index = users.indexOfFirst { it.id == user.id }
-        return if (index != -1) {
-            users[index] = user
-            Log.d(TAG, "Usuario con ID: ${user.id} actualizado correctamente")
+    override suspend fun deleteUser(id: Int): Boolean {
+        Log.d(TAG, "Intentando eliminar el usuario con ID: $id")
+        val userEntity = usersDao.getUserById(id) // Obtenemos el usuario a eliminar
+        return if (userEntity != null) {
+            usersDao.deleteUser(userEntity) // Si existe, lo eliminamos
+            Log.d(TAG, "Usuario con ID: $id eliminado correctamente")
             true
         } else {
-            Log.d(TAG, "Usuario con ID: ${user.id} no encontrado")
+            Log.d(TAG, "Usuario con ID: $id no encontrado para eliminar")
             false
         }
-    }
-
-    override fun deleteUser(id: Int): Boolean {
-        Log.d(TAG, "Intentando eliminar el usuario con ID: $id")
-        val result = users.removeIf { it.id == id }
-        if (result) {
-            Log.d(TAG, "Usuario con ID: $id eliminado correctamente")
-        } else {
-            Log.d(TAG, "Usuario con ID: $id no encontrado para eliminar")
-        }
-        return result
     }
 }

@@ -82,7 +82,7 @@ fun ProfileHeader(user: User) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    user.name,
+                    user.fullName,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -90,11 +90,6 @@ fun ProfileHeader(user: User) {
 
 
             }
-            Text(
-                user.bio,
-                fontSize = 12.sp,
-                color = Color.Black
-            )
         }
     }
 }

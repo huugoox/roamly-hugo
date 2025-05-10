@@ -16,6 +16,7 @@
     <string name="error_required_field">Camp obligatori</string>
     <string name="error_mobile_digits">Ha de tenir 10 dígits</string>
     <string name="error_pin_digits">Ha de tenir 6 dígits</string>
+    <string name="error_invalid_username">Nom d\'usuari ja existent</string>
     <string name="about_title">Sobre</string>
     <string name="back">Enrere</string>
     <string name="version">Versió</string>

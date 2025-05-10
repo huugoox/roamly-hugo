@@ -1,28 +1,13 @@
 package com.example.roamly.ui.view
-import android.annotation.SuppressLint
+
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,9 +22,8 @@ import androidx.navigation.NavController
 import com.example.roamly.R
 import com.example.roamly.ui.viewmodel.RegisterViewModel
 
-
 @Composable
-fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = hiltViewModel() ) {
+fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = hiltViewModel()) {
 
     Box(
         modifier = Modifier
@@ -60,12 +44,12 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
 
             // Nombre Completo
             OutlinedTextField(
-                value = viewModel.storeName,
-                onValueChange = { viewModel.onStoreNameChanged(it) },
+                value = viewModel.fullName,
+                onValueChange = { viewModel.onFullNameChanged(it) },
                 placeholder = { Text(stringResource(id = R.string.full_name), color = Color.Gray) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
                 shape = RoundedCornerShape(12.dp),
-                isError = viewModel.storeNameError != null,
+                isError = viewModel.fullNameError != null,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color.Gray,
                     unfocusedBorderColor = Color.LightGray,
@@ -73,7 +57,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
                     unfocusedTextColor = Color.Black
                 )
             )
-            viewModel.storeNameError?.let {
+            viewModel.fullNameError?.let {
                 Text(text = it, color = Color.Red, fontSize = 12.sp)
             }
             Spacer(modifier = Modifier.height(12.dp))
@@ -83,7 +67,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
                 value = viewModel.email,
                 onValueChange = { viewModel.onEmailChanged(it) },
                 placeholder = { Text(stringResource(id = R.string.email), color = Color.Gray) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 shape = RoundedCornerShape(12.dp),
                 isError = viewModel.emailError != null,
@@ -99,12 +83,32 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             }
             Spacer(modifier = Modifier.height(12.dp))
 
+            // Username
+            OutlinedTextField(
+                value = viewModel.username,
+                onValueChange = { viewModel.onUsernameChanged(it) },
+                placeholder = { Text("Username", color = Color.Gray) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                shape = RoundedCornerShape(12.dp),
+                isError = viewModel.usernameError != null,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color.Gray,
+                    unfocusedBorderColor = Color.LightGray,
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black
+                )
+            )
+            viewModel.usernameError?.let {
+                Text(it, color = Color.Red, fontSize = 12.sp)
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+
             // Contraseña
             OutlinedTextField(
                 value = viewModel.password,
                 onValueChange = { viewModel.onPasswordChanged(it) },
                 placeholder = { Text(stringResource(id = R.string.password), color = Color.Gray) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 shape = RoundedCornerShape(12.dp),
@@ -117,7 +121,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
                 )
             )
             viewModel.passwordError?.let {
-                    Text(it, color = Color.Red, fontSize = 12.sp)
+                Text(it, color = Color.Red, fontSize = 12.sp)
             }
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -126,7 +130,7 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
                 value = viewModel.confirmPassword,
                 onValueChange = { viewModel.onConfirmPasswordChanged(it) },
                 placeholder = { Text(stringResource(id = R.string.confirm_password), color = Color.Gray) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 shape = RoundedCornerShape(12.dp),
@@ -143,15 +147,76 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             }
             Spacer(modifier = Modifier.height(20.dp))
 
+            // Fecha de nacimiento
+            OutlinedTextField(
+                value = viewModel.birthdate,
+                onValueChange = { viewModel.onBirthdateChanged(it) },
+                placeholder = { Text("Birthdate (dd/MM/yyyy)", color = Color.Gray) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                shape = RoundedCornerShape(12.dp),
+                isError = viewModel.birthdateError != null
+            )
+            viewModel.birthdateError?.let {
+                Text(it, color = Color.Red, fontSize = 12.sp)
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Dirección
+            OutlinedTextField(
+                value = viewModel.address,
+                onValueChange = { viewModel.onAddressChanged(it) },
+                placeholder = { Text("Address", color = Color.Gray) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                shape = RoundedCornerShape(12.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // País
+            OutlinedTextField(
+                value = viewModel.country,
+                onValueChange = { viewModel.onCountryChanged(it) },
+                placeholder = { Text("Country", color = Color.Gray) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                shape = RoundedCornerShape(12.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Teléfono
+            OutlinedTextField(
+                value = viewModel.phoneNumber,
+                onValueChange = { viewModel.onPhoneNumberChanged(it) },
+                placeholder = { Text("Phone Number", color = Color.Gray) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                shape = RoundedCornerShape(12.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Checkbox aceptar emails
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Checkbox(
+                    checked = viewModel.acceptEmails,
+                    onCheckedChange = { viewModel.onAcceptEmailsChanged(it) }
+                )
+                Text(text = "Accept to receive emails", fontSize = 14.sp)
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+
             // Botón de Registro
             Button(
                 onClick = {
-                    println("✅ Botón Sign Up presionado")
+                    Log.d("RegisterScreen", "✅ Botón Sign Up presionado")
                     val isValid = viewModel.validateAllFields()
-                    println("¿Validación exitosa? $isValid")
+                    Log.d("RegisterScreen", "¿Validación exitosa? $isValid")
                     if (isValid) {
-                        println("➡️ Intentando navegar a Home...")
-                        navController.navigate("home")
+                        viewModel.onRegisterClicked()
+                        Log.d("RegisterScreen", "➡️ Intentando navegar a Login...")
+                        navController.navigate("login")
+                    } else {
+                        Log.d("RegisterScreen", "❌ Error en la validación de formulario")
                     }
                 },
                 modifier = Modifier
@@ -166,7 +231,10 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
             Spacer(modifier = Modifier.height(10.dp))
 
             // Ir a Login
-            TextButton(onClick = { navController.navigate("login") }) {
+            TextButton(onClick = {
+                Log.d("RegisterScreen", "🔙 Botón 'Already have an account' presionado")
+                navController.navigate("login")
+            }) {
                 Text(text = stringResource(id = R.string.already_have_account), color = Color.Gray)
             }
         }

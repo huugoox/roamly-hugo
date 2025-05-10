@@ -72,7 +72,8 @@ object TripRepository222 {
             tripId = 1,
             description = "Colosseum Guided Tour",
             date = Calendar.getInstance().apply { set(2024, Calendar.JUNE, 13) }.time,
-            location = "Rome"
+            location = "Rome",
+
         ),
         ItineraryItem(
             id = 2,

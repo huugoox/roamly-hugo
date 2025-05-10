@@ -16,6 +16,7 @@
     <string name="error_required_field">Field required</string>
     <string name="error_mobile_digits">Must contain 10 digits</string>
     <string name="error_pin_digits">Must contain 6 digits</string>
+    <string name="error_invalid_username">Username already taken</string>
     <string name="about_title">About</string>
     <string name="back">Back</string>
     <string name="version">Version</string>

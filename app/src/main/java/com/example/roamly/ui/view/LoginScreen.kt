@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,35 +17,41 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import android.util.Log
+import com.example.authentication.ui.viewmodels.AuthState
 import com.example.roamly.R
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
+import com.example.roamly.ui.viewmodel.LoginViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController) {
-
-    // States for email, password, and the alert dialog
-    var email by remember { mutableStateOf("hfs2@alumnes.udl.cat") }
-    var password by remember { mutableStateOf("123456") }
-    var showAlert by remember { mutableStateOf(false) }
-    var showRecoverDialog by remember { mutableStateOf(false) }
-    var showRecoverDialogRes by remember { mutableStateOf(false) }
-
-    var recoveryEmail by remember { mutableStateOf("") }
-    var recoveryMessage by remember { mutableStateOf("") }
-
-    // Default email for password recovery placeholder
+fun LoginScreen(
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
+    val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
+    val showAlert by viewModel.showAlert.collectAsState()
+    val showRecoverDialog by viewModel.showRecoverDialog.collectAsState()
+    val showRecoverDialogRes by viewModel.showRecoverDialogRes.collectAsState()
+    val recoveryEmail by viewModel.recoveryEmail.collectAsState()
+    val recoveryMessage by viewModel.recoveryMessage.collectAsState()
+    val authState by viewModel.authState.observeAsState()
     val defaultEmail = stringResource(id = R.string.default_email)
 
-    // Firebase Auth instance
-    val auth = remember { FirebaseAuth.getInstance() }
+    // Navegación reactiva basada en authState
+    LaunchedEffect(authState) {
+        when (authState) {
+            is AuthState.Authenticated -> {
+                navController.navigate("home") {
+                    popUpTo("login") { inclusive = true }
+                }
+            }
+            is AuthState.Error -> {
+                viewModel.setShowAlert(true)
+            }
+            else -> {}
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -71,12 +78,10 @@ fun LoginScreen(navController: NavController) {
 
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = viewModel::onEmailChange,
                 label = { Text(stringResource(id = R.string.email)) },
                 singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Transparent),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
@@ -92,86 +97,60 @@ fun LoginScreen(navController: NavController) {
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = viewModel::onPasswordChange,
                 label = { Text(stringResource(id = R.string.password)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Transparent),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Gray,
-                    unfocusedBorderColor = Color.LightGray,
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
+                    focusedBorderColor = Color.Gray,
+                    unfocusedBorderColor = Color.LightGray,
                     cursorColor = Color.Black,
                     focusedLabelColor = Color.Gray,
                     unfocusedLabelColor = Color.DarkGray
                 )
             )
+
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
                 onClick = {
-                    // Attempt Firebase login
-                    CoroutineScope(Dispatchers.IO).launch {
-                        try {
-                            auth.signInWithEmailAndPassword(email, password).await()
-                            withContext(Dispatchers.Main) {
-                                Log.d("LoginScreen", "Login successful")
-                                navController.navigate("home") {
-                                    popUpTo("login") { inclusive = true }
-                                }
-                            }
-                        } catch (e: Exception) {
-                            Log.e("LoginScreen", "Login failed", e)
-                            withContext(Dispatchers.Main) {
-                                showAlert = true
-                            }
-                        }
-                    }
+                    viewModel.login(email, password)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black
-                )
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
-                Text(
-                    text = stringResource(id = R.string.login),
-                    color = Color.White,
-                    fontSize = 18.sp
-                )
+                Text(text = stringResource(id = R.string.login), color = Color.White, fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            TextButton(onClick = { showRecoverDialog = true }) {
+            TextButton(onClick = { viewModel.setShowRecoverDialog(true) }) {
                 Text(text = stringResource(id = R.string.forgot_password), color = Color.Gray)
             }
+
             TextButton(onClick = { navController.navigate("register") }) {
                 Text(text = stringResource(id = R.string.dont_have_account), color = Color.Gray)
             }
         }
 
-        // Show an alert dialog if the login fails
         if (showAlert) {
             AlertDialog(
-                onDismissRequest = { showAlert = false },
+                onDismissRequest = { viewModel.setShowAlert(false) },
                 containerColor = Color.White,
                 title = { Text(stringResource(id = R.string.login_failed), color = Color.Black) },
                 text = { Text(stringResource(id = R.string.invalid_username_password), color = Color.Black) },
                 confirmButton = {
                     Button(
-                        onClick = { showAlert = false },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Black,
-                            contentColor = Color.White
-                        )
+                        onClick = { viewModel.setShowAlert(false) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
                     ) {
                         Text("OK")
                     }
@@ -181,20 +160,17 @@ fun LoginScreen(navController: NavController) {
 
         if (showRecoverDialog) {
             AlertDialog(
-                onDismissRequest = { showRecoverDialog = false },
+                onDismissRequest = { viewModel.setShowRecoverDialog(false) },
                 containerColor = Color.White,
                 title = { Text(stringResource(id = R.string.recover_password), color = Color.Black) },
                 text = {
                     Column {
-                        Text(
-                            stringResource(id = R.string.enter_email_recovery),
-                            color = Color.Black
-                        )
+                        Text(stringResource(id = R.string.enter_email_recovery), color = Color.Black)
                         Spacer(modifier = Modifier.height(10.dp))
                         OutlinedTextField(
                             value = recoveryEmail,
-                            onValueChange = { recoveryEmail = it },
-                            label = { Text(stringResource(id = R.string.email), color = Color.LightGray) },
+                            onValueChange = viewModel::onRecoveryEmailChange,
+                            label = { Text(stringResource(id = R.string.email)) },
                             modifier = Modifier.fillMaxWidth(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                             shape = RoundedCornerShape(12.dp),
@@ -212,40 +188,16 @@ fun LoginScreen(navController: NavController) {
                 },
                 confirmButton = {
                     Button(
-                        onClick = {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                val isSuccess = if (recoveryEmail == defaultEmail) {
-                                    sendRecoveryEmail(recoveryEmail)
-                                } else {
-                                    false
-                                }
-                                withContext(Dispatchers.Main) {
-                                    recoveryMessage = if (isSuccess) {
-                                        "Recovery email sent successfully."
-                                    } else {
-                                        "Failed to send recovery email. \n Please check the email address."
-                                    }
-                                    showRecoverDialog = false
-                                    showRecoverDialogRes = true
-
-                                }
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Black,
-                            contentColor = Color.White
-                        )
+                        onClick = { viewModel.sendRecoveryEmail(defaultEmail) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
                     ) {
                         Text(stringResource(id = R.string.send))
                     }
                 },
                 dismissButton = {
                     Button(
-                        onClick = { showRecoverDialog = false },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Black,
-                            contentColor = Color.White
-                        )
+                        onClick = { viewModel.setShowRecoverDialog(false) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
                     ) {
                         Text(stringResource(id = R.string.cancel))
                     }
@@ -253,22 +205,17 @@ fun LoginScreen(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
-
         if (showRecoverDialogRes) {
             AlertDialog(
-                onDismissRequest = {
-                    showRecoverDialogRes = false
-                    showRecoverDialog = false
-                },
+                onDismissRequest = { viewModel.setShowRecoverDialogRes(false) },
                 containerColor = Color.White,
                 title = { Text(stringResource(id = R.string.recovery_status), color = Color.Black) },
                 text = { Text(recoveryMessage, color = Color.Black) },
                 confirmButton = {
-                    Button(onClick = { showRecoverDialogRes = false },                        colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
-                    )) {
+                    Button(
+                        onClick = { viewModel.setShowRecoverDialogRes(false) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+                    ) {
                         Text("OK")
                     }
                 }
@@ -277,11 +224,3 @@ fun LoginScreen(navController: NavController) {
     }
 }
 
-// Placeholder for actual recovery implementation
-suspend fun sendRecoveryEmail(email: String): Boolean {
-    return try {
-        true
-    } catch (e: Exception) {
-        false
-    }
-}
