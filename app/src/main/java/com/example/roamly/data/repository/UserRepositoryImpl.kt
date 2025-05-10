@@ -23,6 +23,12 @@ class UserRepositoryImpl @Inject constructor(
         return userEntity?.toDomain() // Convertimos a modelo de dominio
     }
 
+    override suspend fun getUserByUsername(username: String): User? {
+        Log.d(TAG, "Buscando usuario con username: $username")
+        val userEntity = usersDao.getUserByUsername(username) // Obtenemos el usuario de la base de datos
+        return userEntity?.toDomain() // Convertimos a modelo de dominio
+    }
+
 
     override suspend fun getAllUsers(): List<User> {
         Log.d(TAG, "Obteniendo todos los usuarios")

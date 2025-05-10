@@ -71,7 +71,6 @@ class RegisterViewModel @Inject constructor(
         private set
 
     var usernameError by mutableStateOf<String?>(null)
-        private set
 
     var passwordError by mutableStateOf<String?>(null)
         private set
@@ -193,6 +192,14 @@ class RegisterViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.e("RegisterViewModel", "Error al insertar usuario: ${e.message}")
             }
+        }
+    }
+
+    fun checkUsernameExists(username: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val existingUsername = userRepository.getUserByUsername(username)
+            val exists = existingUsername != null
+            onResult(exists)
         }
     }
 

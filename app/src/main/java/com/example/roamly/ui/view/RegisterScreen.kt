@@ -212,9 +212,16 @@ fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = 
                     val isValid = viewModel.validateAllFields()
                     Log.d("RegisterScreen", "¿Validación exitosa? $isValid")
                     if (isValid) {
-                        viewModel.onRegisterClicked()
-                        Log.d("RegisterScreen", "➡️ Intentando navegar a Login...")
-                        navController.navigate("login")
+                        viewModel.checkUsernameExists(viewModel.username) { exists ->
+                            if (exists) {
+                                Log.d("RegisterScreen", "❌ El nombre de usuario ya existe")
+                                viewModel.usernameError = "Username already exists"
+                            } else {
+                                viewModel.onRegisterClicked()
+                                Log.d("RegisterScreen", "➡️ Intentando navegar a Login...")
+                                navController.navigate("login")
+                            }
+                        }
                     } else {
                         Log.d("RegisterScreen", "❌ Error en la validación de formulario")
                     }
