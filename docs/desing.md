@@ -44,7 +44,8 @@ classDiagram
     
   
     class Trip {  
-        +String id  
+        +String id
+        +Int userId  
         +String destination  
         +Date startDate  
         +Date endDate  
