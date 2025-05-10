@@ -22,6 +22,12 @@ import androidx.navigation.NavController
 import com.example.authentication.ui.viewmodels.AuthState
 import com.example.roamly.R
 import com.example.roamly.ui.viewmodel.LoginViewModel
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 @Composable
 fun LoginScreen(
@@ -31,12 +37,13 @@ fun LoginScreen(
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     val showAlert by viewModel.showAlert.collectAsState()
-    val showRecoverDialog by viewModel.showRecoverDialog.collectAsState()
-    val showRecoverDialogRes by viewModel.showRecoverDialogRes.collectAsState()
-    val recoveryEmail by viewModel.recoveryEmail.collectAsState()
-    val recoveryMessage by viewModel.recoveryMessage.collectAsState()
+    var showRecoverDialog by remember { mutableStateOf(false) }
+    var showRecoverDialogRes by remember { mutableStateOf(false) }
     val authState by viewModel.authState.observeAsState()
     val defaultEmail = stringResource(id = R.string.default_email)
+
+    var recoveryEmail by remember { mutableStateOf("") }
+    var recoveryMessage by remember { mutableStateOf("") }
 
     // Navegación reactiva basada en authState
     LaunchedEffect(authState) {
@@ -132,7 +139,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            TextButton(onClick = { viewModel.setShowRecoverDialog(true) }) {
+            TextButton(onClick = { showRecoverDialog = true }) {
                 Text(text = stringResource(id = R.string.forgot_password), color = Color.Gray)
             }
 
@@ -169,7 +176,7 @@ fun LoginScreen(
                         Spacer(modifier = Modifier.height(10.dp))
                         OutlinedTextField(
                             value = recoveryEmail,
-                            onValueChange = viewModel::onRecoveryEmailChange,
+                            onValueChange = { recoveryEmail = it },
                             label = { Text(stringResource(id = R.string.email)) },
                             modifier = Modifier.fillMaxWidth(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -188,15 +195,33 @@ fun LoginScreen(
                 },
                 confirmButton = {
                     Button(
-                        onClick = { viewModel.sendRecoveryEmail(defaultEmail) },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+                        onClick = { // @ToDo
+                            CoroutineScope(Dispatchers.IO).launch {
+                                val isSuccess = sendRecoveryEmail(recoveryEmail)
+                                withContext(Dispatchers.Main) {
+                                    recoveryMessage = if (isSuccess) {
+                                        "Recovery email sent successfully."
+                                    } else {
+                                        "Failed to send recovery email. \n" +
+                                                " Please check the email address."
+                                    }
+                                    showRecoverDialog = false
+                                    showRecoverDialogRes = true
+
+                                }
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black,
+                            contentColor = Color.White
+                        )
                     ) {
                         Text(stringResource(id = R.string.send))
                     }
                 },
                 dismissButton = {
                     Button(
-                        onClick = { viewModel.setShowRecoverDialog(false) },
+                        onClick = { showRecoverDialog = false },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
                     ) {
                         Text(stringResource(id = R.string.cancel))
@@ -224,3 +249,14 @@ fun LoginScreen(
     }
 }
 
+
+suspend fun sendRecoveryEmail(email: String): Boolean {
+    return try {
+        FirebaseAuth.getInstance()
+            .sendPasswordResetEmail(email)
+            .await()
+        true
+    } catch (e: Exception) {
+        false
+    }
+}
