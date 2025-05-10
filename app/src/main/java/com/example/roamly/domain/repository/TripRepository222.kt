@@ -24,7 +24,8 @@ object TripRepository222 {
                     date = Calendar.getInstance().apply { set(2024, Calendar.JUNE, 13) }.time,
                     location = "Rome"
                 )
-            )
+            ),
+            userId = 123
         ),
         Trip(
             id = 2,
@@ -43,7 +44,8 @@ object TripRepository222 {
                     date = Calendar.getInstance().apply { set(2024, Calendar.AUGUST, 4) }.time,
                     location = "Cairo"
                 )
-            )
+            ),
+            userId = 123
         ),
         Trip(
             id = 3,
@@ -62,7 +64,8 @@ object TripRepository222 {
                     date = Calendar.getInstance().apply { set(2024, Calendar.NOVEMBER, 6) }.time,
                     location = "Sydney"
                 )
-            )
+            ),
+            userId = 123
         )
     )
 
@@ -72,8 +75,7 @@ object TripRepository222 {
             tripId = 1,
             description = "Colosseum Guided Tour",
             date = Calendar.getInstance().apply { set(2024, Calendar.JUNE, 13) }.time,
-            location = "Rome",
-
+            location = "Rome"
         ),
         ItineraryItem(
             id = 2,

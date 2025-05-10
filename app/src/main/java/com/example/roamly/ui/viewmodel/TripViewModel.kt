@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.roamly.domain.models.Trip
 import com.example.roamly.domain.repository.TripRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
@@ -16,10 +17,16 @@ class TripViewModel @Inject constructor(
     private val repository: TripRepository
 ) : ViewModel() {
 
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
     private val _trips = mutableStateListOf<Trip>()
     val trips: List<Trip> get() = _trips
 
+    private var currentUserId: String? = null
+
     init {
+        val user = auth.currentUser
+        currentUserId = user?.uid
         loadTrips()
     }
 
@@ -27,7 +34,13 @@ class TripViewModel @Inject constructor(
         Log.d("TripViewModel", "Cargando todos los viajes...")
         _trips.clear()
         viewModelScope.launch {
-            _trips.addAll(repository.getAllTrips())
+            //_trips.addAll(repository.getAllTrips())
+            currentUserId?.let { userId ->
+                _trips.addAll(repository.getTripsByUserId(userId.hashCode()))
+                Log.d("TripViewModel", "Viajes cargados: ${_trips.size} viajes encontrados para el usuario $userId.")
+            } ?: run {
+                Log.d("TripViewModel", "No hay usuario autenticado.")
+            }
         }
         Log.d("TripViewModel", "Viajes cargados: ${_trips.size} viajes encontrados.")
     }
@@ -37,6 +50,7 @@ class TripViewModel @Inject constructor(
             Log.d("TripViewModel", "Intentando agregar un nuevo viaje a $destination.")
             val newTrip = Trip(
                 id = 0,
+                userId = currentUserId!!.hashCode(),
                 destination = destination,
                 startDate = startDate,
                 endDate = endDate,

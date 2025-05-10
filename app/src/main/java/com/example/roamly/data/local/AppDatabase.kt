@@ -12,7 +12,7 @@ import com.example.roamly.data.local.entity.UserEntity
 @Database(
     entities = [TripEntity::class, ItineraryItemEntity::class, UserEntity::class],
     //entities = [TripEntity::class, ItineraryItemEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -30,6 +30,10 @@ class TripRepositoryImpl @Inject constructor(
         return tripEntity.toDomain(itineraryItems)
     }
 
+    override suspend fun getTripsByUserId(userId: Int): List<Trip> {
+        return tripDao.getTripsByUserId(userId).map { it.toDomain() }
+    }
+
     suspend override fun getAllTrips(): List<Trip> {
         Log.d(TAG, "Obteniendo todos los viajes desde la base de datos")
         return tripDao.getTrips().map { it.toDomain() }

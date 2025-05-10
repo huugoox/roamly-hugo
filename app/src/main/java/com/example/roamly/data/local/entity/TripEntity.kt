@@ -8,6 +8,7 @@ import java.util.Date
 data class TripEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val userId: Int,
     val destination: String,
     val startDate: Long,
     val endDate: Long,

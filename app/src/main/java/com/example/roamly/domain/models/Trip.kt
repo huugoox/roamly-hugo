@@ -4,6 +4,7 @@ import java.util.Date
 
 data class Trip(
     val id: Int,
+    val userId: Int,
     val destination: String,
     val startDate: Date,
     val endDate: Date,

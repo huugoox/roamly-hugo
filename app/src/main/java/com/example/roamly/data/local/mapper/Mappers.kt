@@ -11,6 +11,7 @@ import java.util.Date
 fun Trip.toEntity(): TripEntity =
     TripEntity(
         id = id,
+        userId = userId,
         destination = destination,
         startDate = startDate.time,
         endDate = endDate.time,
@@ -32,6 +33,7 @@ fun ItineraryItem.toEntity(): ItineraryItemEntity =
 fun TripEntity.toDomain(itineraryItems: List<ItineraryItem>? = emptyList()): Trip =
     Trip(
         id = id,
+        userId = userId,
         destination = destination,
         startDate = Date(startDate),
         endDate = Date(endDate),

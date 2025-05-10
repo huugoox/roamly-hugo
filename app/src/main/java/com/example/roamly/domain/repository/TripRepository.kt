@@ -8,4 +8,5 @@ interface TripRepository {
     suspend fun getAllTrips(): List<Trip>
     suspend fun updateTrip(trip: Trip): Boolean
     suspend fun deleteTrip(id: Int): Boolean
+    suspend fun getTripsByUserId(userId: Int): List<Trip>
 }
