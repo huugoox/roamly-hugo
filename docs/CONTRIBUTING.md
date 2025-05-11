@@ -1,64 +1,45 @@
-**Sprint01**
+**Sprint04**
+T1. Login and Logout (1 Points) --> All done
 
-La estrategia de proyecto que hemos seguido ha estado infuluenciada por la distancia física
-que tenemos entre los miembros.
-Hemos considerado que la mejor opción era trabajar únicamente con una rama de proyecto para
-ejecutar la aplicación directament desde un dispositivo Android (en este caso el de Pol) a causa
-de la organización.
-El trabajo se ha realizado mediante videollamadas y eventualmente este fin de semana nos hemos podido
-reunir presencialmente para establecer mejor las bases del proyecto.
+T1.1: Connect your app to Firebase. --> Done
 
-**Sprint02**
+• T1.2: Design android screen (login form). --> Done
 
-En este apartado detallaremos las contribuciones individuales de cada miembro del grupo:
+• T1.3: Implement the actions to be logged in using Firebase (auth & password). --> Done
 
+• T1.4: Create an action in the app to allow the user log out. --> Done
 
-T1. Implement Travel Management Logic (5 Points)
-
-• T1.1 Implement inMemory CRUD operations for trips (addTrip, editTrip,
-deleteTrip) following MVVM pattern --> Pol/Hugo
-
-• T1.2 Implement inMemory CRUD operations for itinerary items (addActivity,
-updateActivity, deleteActivity) following MVVM pattern. --> Pol/Hugo
-
-• T1.3 Ensure proper data validation (e.g., dates must be in the future, required
-fields). --> Pol
-
-• T1.4 Implement user settings. --> Pol
-
-• T1.5 Implement multi-language. (minimum 3 languages [en,ca,es]) --> En fase de desarrollo
+• T1.5: Use Logcat to track all operations and errors. --> Done
 
 
-T2. Design and Implement Itinerary Flow (2 Points)
+T2. Register and Recover password (4 Points) --> All done
 
-• T2.1 Structure how users will interact with the itinerary. --> Hugo
+T2.1: Design android screen (register form) --> Done
 
-• T2.2 Implement a basic UI flow for adding and modifying trip details. --> Pol
+T2.2: Implement the actions to be registered using Firebase (auth & password). The
+implementation must use the design pattern repository. --> Done
+o Implement email verification, see firebase documentation --> Done
 
-• T2.3 Ensure updates reflect dynamically in the main trip list. --> Pol
-
-
-T3. Implement Data Validation and Testing (3 Points)
-
-• T3.1 Implement basic input validation (e.g., empty fields, incorrect dates). --> Hugo
-
-• T3.2 Write unit tests for trip and itinerary CRUD operations. --> Hugo
-
-• T3.3 Simulate user interactions and log errors or unexpected behaviors. --> Pol
-
-• T3.4 Update documentation with test results and fixes applied. --> Hugo/Pol
-
-• T3.5 Add logs (to be seen in logcat) and commentaries applying good practices --> Hugo
+T2.3: Implement the actions and the view in order to create an option to recover
+the password. It depends on where you create this feature (new Screen) --> Done
 
 
-Como se puede observar hemos intentado repartir las tareas aunque hemos participado
-directamente o indirectamente en todas ambos.
+T3. Persist user information and trip (4 Points)
+• T3.1 Persist the user information in the local DB (create user table). --> Done
+o Minimum information: login, username, birthdate (date field), address,
+country and phone number, accept receive emails.
+
+o Must check if the username is already in use. --> Done
 
 
-**Anotaciones**
+• T3.2 Change the trip table structure to accept multiple users and show only the
+trips for the user logged in. --> Done
 
-1. Nuevamente hemos tenido issues con el tema del multi-language.
-Tenemos implementados los values y las funciones para canviar el idioma 
+• T3.4 Update documentation with database schema and usage at design.md. --> Done
 
-2. Todos los test unitarios realizados tanto de trip como de itinerary 
-han pasado correctamente.
+
+• T3.5 Persist the application access. It is needed to be persisted every time a user is
+logged in and logged out, persisting userid and datetime --> Partial done
+
+
+T4. UX Improvement (1 Points) --> No changes because the last sprint03 was graded with 10/10 points
