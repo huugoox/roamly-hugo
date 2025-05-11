@@ -16,4 +16,4 @@
 - **Mermaid / app.diagrams.net** para modelado de datos  
 
 ## 👥 Desarrollado por:
-Proyecto desarrollado por Hugo Fernández Sisquella y Pol Marsol Torras como parte del curso de **Desarrollo de Aplicaciones Móviles** - *Universidad de Lleida*  
+Proyecto desarrollado por Hugo Fernández Sisquella como parte del curso de **Desarrollo de Aplicaciones Móviles** - *Universidad de Lleida*  
