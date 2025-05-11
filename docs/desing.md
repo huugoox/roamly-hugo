@@ -1,7 +1,7 @@
 # Modelo de Datos de Roamly  
 
 ## Introducción  
-Este documento describe el modelo de datos para una aplicación de agencia de viajes. El modelo está diseñado para gestionar usuarios, sus viajes, itinerarios, preferencias y recomendaciones impulsadas por IA. También incluye funcionalidades de autenticación y mapeo. 
+Este documento describe el modelo de datos para una aplicación de agencia de viajes. El modelo está diseñado para gestionar usuarios, sus viajes, itinerarios, preferencias y recomendaciones impulsadas por IA. También incluye funcionalidades de autenticación y mapeo.  
 
 ## Diagrama de clases 
 El siguiente diagrama de clases en Mermaid representa las relaciones entre las diferentes entidades del sistema:
