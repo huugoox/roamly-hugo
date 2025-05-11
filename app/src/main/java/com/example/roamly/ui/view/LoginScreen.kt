@@ -238,7 +238,8 @@ fun LoginScreen(
                 text = { Text(recoveryMessage, color = Color.Black) },
                 confirmButton = {
                     Button(
-                        onClick = { viewModel.setShowRecoverDialogRes(false) },
+                        //onClick = { viewModel.setShowRecoverDialogRes(false) },
+                        onClick = { showRecoverDialogRes = false },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
                     ) {
                         Text("OK")
